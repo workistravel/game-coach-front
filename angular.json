@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "game-coach-front"
+    }
+  },
+  "defaultProject": "game-coach-front",
+  "cli": {
+    "analytics": "f35b7a20-d7f0-41ef-b543-6b97a82eebc2"
+  }
 }
