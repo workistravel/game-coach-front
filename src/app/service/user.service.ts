@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import {HttpClient, HttpErrorResponse, HttpEvent, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpEvent} from '@angular/common/http';
 import { Observable} from 'rxjs';
 import {User} from '../model/user';
 import {CustomHttpResponse} from '../model/custom-http-response';
@@ -28,11 +28,14 @@ export class UserService {
     return this.http.get<CustomHttpResponse>(`${this.host}/user/resetpassword/${email}`);
   }
 
+  public changePassword(formData: FormData): Observable<CustomHttpResponse>{
+    return this.http.post<CustomHttpResponse>(`${this.host}/user/updatepassword`, formData);
+  }
+
   public updateProfileImage(formData: FormData): Observable<HttpEvent<User>>{
     return this.http.post<User>(`${this.host}/user/updateProfileImage`, formData,
-      {reportProgress: true,
-              observe: 'events'
-      });
+      {reportProgress: true, observe: 'events'}
+      );
   }
 
   public deleteUser(email: string): Observable<CustomHttpResponse>{
@@ -50,17 +53,25 @@ export class UserService {
     return null;
   }
 
-  public createUserFromDate(loggedInUsername: string, user: User, profileImage: File): FormData{
+  public createUserFromDate(loggedInEmail: string, user: User, profileImageUrl: File): FormData{
     const formData = new FormData();
-    formData.append('currentUsername', loggedInUsername );
+    formData.append('currentEmail', loggedInEmail );
     formData.append('firstName', user.firstName);
     formData.append('lastName', user.lastName );
-    formData.append('username', user.username );
     formData.append('email', user.email );
     formData.append('role', user.role );
-    formData.append('profileImageUrl', user.profileImageUrl );
+    formData.append('profileImage', profileImageUrl );
     formData.append('isActive', JSON.stringify(user.active) );
     formData.append('isNonLocked', JSON.stringify(user.nonLocked) );
     return formData;
   }
+  public createPasswordForm(loggedEmail: string, oldPassword: string, newPassword: string){
+    const formData = new FormData();
+    formData.append('loggedEmail', loggedEmail);
+    formData.append('oldPassword', oldPassword);
+    formData.append('newPassword', newPassword);
+    return formData;
+  }
+
+
 }

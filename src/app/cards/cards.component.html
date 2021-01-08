@@ -1,0 +1,186 @@
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #7f234f" >
+  <div class="container">
+    <a [routerLink]="['/main']" class="navbar-brand" >Game 4 coach</a>
+    <button class="navbar-toggler" type="button"  style="background-color:  #fff7e3;"  data-toggle="collapse" data-target="#navbarContent"
+            aria-controls="navbarContent" aria-expanded="false">
+      <span class="navbar-toggler-icon" ></span>
+    </button>
+    <div class="collapse navbar-collapse " id="navbarContent">
+      <ul class="nav nav-pills mr-auto my-1 mb-2">
+
+        <li class="nav-item"><a class="nav-link  ml-3  active" data-toggle="tab"  href="#decks"><i class="fa fa-cogs"></i> Колоды</a></li>
+      </ul>
+      <div *ngIf="presence" class="md-2" style="color:#fff7e3; " >
+        Привет, {{ currentUser?.firstName}}
+      </div>
+      <button class="btn btn-outline-dark ml-3" (click)="onLogOut()" [routerLink]="['/main']">Выход<i class="fas fa-sign-in-alt ml-1"></i></button>
+    </div>
+  </div>
+</nav>
+
+    <div class="container-lg">
+      <div class="tab-content mt-3" >
+
+
+<!--        редактор карт-->
+
+        <div class="container  tab-pane fade " id="card" >
+
+          <div class="container row">
+
+            <div class="container col-3">
+              <div class="card shadow p-3 bg-white rounded">
+                    <div class="navbar-nav">
+                      <img alt="" class="card-img-top p-3" style="max-width: 200px" src="{{currentDeck?.backOfCardUrl}}">
+                      <h5 class="col-12">{{currentDeck?.name}}</h5>
+                    </div>
+              </div>
+          </div>
+
+            <div class="container col-9" >
+              <div class="card shadow p-4 mb-5 bg-white rounded">
+                <h3>Карты в колоде</h3>
+                <hr>
+<!--                [onAdd]="currentDeck"-->
+                 <app-card [inputDeck]="outputDeck" [inputCards]="outputCards" ></app-card>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+
+        <!--              cards decks -->
+        <div class="container tab-pane fade show active" id="decks" >
+          <div class="card shadow p-3 mb-5 bg-white rounded">
+              <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <div class="navbar-nav">
+                      <ul class="nav nav-pills mr-auto my-1 mb-2">
+                        <li class="nav-item"><a class="btn btn-outline-dark ml-3 " (click)="goToMenu()" >  Меню </a></li>
+                        <li class="nav-item"><a class="btn btn-outline-dark ml-3 " data-toggle="modal"  data-target="#addDeck">  Добавить новую колоду  </a></li>
+                      </ul>
+                    </div>
+                  </div>
+              </nav>
+              <hr>
+<!--            колоды-->
+                <div class="row bootstrap snippets">
+                  <div class="card shadow mx-auto mb-3 " style="width:320px;"  *ngFor=" let deck of decks">
+                    <img alt="" class="card-img-top p-3 shadow" src="{{deck?.backOfCardUrl}}">
+                    <div class="card-body">
+                      <h4 class="card-title text-center">{{deck.name}}</h4>
+                        <a href="#editDeck" (click)="onUploadCurrentDeck(deck)"  data-toggle="modal" class="btn btn-outline-dark ml-3 ">Редактор</a>
+                        <button class="btn btn-outline-dark ml-3" (click)="deleteDeck(deck.id)">Удалить</button>
+                    </div>
+                  </div>
+                </div>
+
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+<!--deck editor-->
+
+<div class="modal draggable fade bd-examole-modal-lg" data-keyboard="false" data-backdrop="static" id="editDeck" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Редактор колоды</h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cleanEditForm()">
+          <span aria-hidden="true">&times;</span></button>
+           </div>
+            <div class="modal-body">
+
+              <form  #formEdit [formGroup]="editDeckForm" (ngSubmit)="onEditDeck()">
+                <div class="d-flex justify-content-center align-items-center rounded">
+                  <img class="rounded" width="180px" height="250" src="{{urlForPresent}}" alt="">
+                </div>
+                <div class="input-group  mb-2 col-sm-12 my-4">
+                  <input type="file" accept="image/*"  id="imgEd" name="file" class="custom-file-input" (change)="onFileSelected($event)" >
+                  <label class="custom-file-label"><span [hidden]="!fileName">{{fileName}}</span>
+                    <span [hidden]="fileName">Выбери файл</span>
+                  </label>
+                </div>
+
+
+                <div class="input-group">
+                  <div class="input-group-append">
+                    <span class="input-group-text"><i class="fas fa-file-signature"></i></span>
+                  </div>
+                  <input type="text" value="" class="form-control" name="replaceNameDeck" placeholder="{{deckName}}" formControlName="replaceNameDeck">
+                </div>
+
+                <div class="input-group mb-2 col-sm-12 my-4">
+                  <button class="btn btn-outline-dark btn-block btn-lg"  type="submit"   [disabled]="editDeckForm.invalid || refreshing">
+                    <i *ngIf="refreshing" class="fas fa-spinner fa-spin"></i>&nbsp;&nbsp;
+                    <span *ngIf="refreshing">Loading...</span>
+                    <span *ngIf="!refreshing"> Сохранить</span>
+                  </button>
+                </div>
+              </form>
+
+         </div>
+         <div class="modal-footer">
+           <a class="btn btn-outline-dark" data-toggle="tab"  href="#card" (click)="closeEdit()"> Добавить карты?</a>
+           <button type="button" class="btn btn-outline-dark" aria-hidden="true" id="closeEdit" (click)="cleanEditForm()" data-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--modal addDeck-->
+
+<div class="modal draggable fade bd-examole-modal-lg" data-keyboard="false" data-backdrop="static" id="addDeck" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Новая колода</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cleanAddForm()">
+          <span aria-hidden="true">&times;</span></button>
+            </div>
+              <div class="modal-body">
+                <form #formAdd [formGroup]="newDeckForm" (ngSubmit)="onAddNewDeck()">
+                    <div class="d-flex justify-content-center align-items-center rounded">
+                      <img class="rounded" width="180px" height="250" src="{{this?.urlForPresent}}" alt="">
+                    </div>
+                    <div class="input-group mb-3 col-sm-12 my-3">
+                      <input type="file" accept="image/*" id="imgInp" name="file" class="custom-file-input" (change)="onFileSelected($event)" >
+                      <label class="custom-file-label">
+                        <span [hidden]="!fileName">{{fileName}}</span>
+                        <span [hidden]="fileName">Выбери файл</span>
+                      </label>
+                    </div>
+
+                    <div class="input-group mb-2 col-sm-12 my-4">
+                  <div class="input-group-append">
+                    <span class="input-group-text"><i class="fas fa-file-signature"></i></span>
+                  </div>
+                      <input type="text" value="" class="form-control" name="deckName" placeholder="Имя колоды" formControlName="deckName">
+                    </div>
+              <div class="input-group mb-2 col-sm-12 my-4">
+              <button class="btn btn-outline-dark btn-block btn-lg"  type="submit"   [disabled]="newDeckForm.invalid || refreshing">
+              <i *ngIf="refreshing" class="fas fa-spinner fa-spin"></i>&nbsp;&nbsp;
+              <span *ngIf="refreshing">Loading...</span>
+              <span *ngIf="!refreshing">Сохранить колоду</span>
+            </button>
+            </div>
+          </form>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" aria-hidden="true" id="closeDeck" (click)="cleanAddForm()" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+

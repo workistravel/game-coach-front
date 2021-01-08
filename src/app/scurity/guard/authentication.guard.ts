@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {AuthenticationService} from '../service/authentication.service';
-import {NotificationService} from '../service/notification.service';
-import {NotificationType} from '../enum/notification-type.enum';
+import {AuthenticationService} from '../../service/authentication.service';
+import {NotificationService} from '../../service/notification.service';
+import {NotificationType} from '../../enum/notification-type.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class AuthenticationGuard implements CanActivate {
     if(this.authenticationService.isLoggedIn()){
       return true;
     }
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/main');
     this.notificationService.notify(NotificationType.ERROR, `You need to login in to access this page`);
 
     return false;

@@ -2,8 +2,6 @@ export class User {
   public userId: string;
   public firstName: string;
   public lastName: string;
-  public username: string;
-  public password: string;
   public email: string;
   public profileImageUrl: string;
   public lastLoginData: Date;
@@ -13,15 +11,17 @@ export class User {
   public authorities: [];
   public active: boolean;
   public nonLocked: boolean;
+  public deck: [];
+
 
   constructor() {
     this.firstName = '';
     this.lastName = '';
-    this.username = '';
     this.email = '';
     this.role = '';
     this.authorities = [];
     this.active = false;
     this.nonLocked = false;
+    this.deck = [];
   }
 }

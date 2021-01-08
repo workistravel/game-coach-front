@@ -1,0 +1,86 @@
+
+      <ul class="nav nav-pills mr-auto my-1 mb-2">
+        <li class="nav-item"><a class="btn btn-outline-dark ml-3 " (click)="goToMenu()" >  Меню </a></li>
+        <li><a class="btn btn-outline-dark ml-3" type="button" (click)="loadInfoForWork()" >
+          <i *ngIf="refreshing" class="fas fa-sync fa-spin"></i><i *ngIf="!refreshing"class="fas fa-sync"></i>
+        </a></li>
+
+        <li class="nav-item"><a class="btn btn-outline-dark ml-3 " data-toggle="modal"  data-target="#addCard" >  Добавить новую карту  </a></li>
+      </ul>
+
+<hr>
+<!--d-flex justify-content-center align-items-center rounded-->
+<div class=" row bootstrap snippets">
+
+  <div class="card-group   justify-content-center align-items-center shadow mx-auto mb-3" style="width: 220px"  *ngFor=" let card of this.inputCards">
+    <button type="button" class="close delete"  (click)="deleteCard(card.id)" >
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class=" card-img" style="text-align: center">
+      <img *ngIf="!card.horizon" alt="" class="card-img-top p-3" style="max-width: 160px; "  src="{{card.pictureUrl}}">
+      <img  *ngIf="card.horizon" alt="" class="card-img-top p-3" style="max-height: 150px;" src="{{card.pictureUrl}}">
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+<!--<div >{{this.onDeck| json}}</div>-->
+
+<!--<app-cards (onAdd)="newValue($event)"></app-cards>-->
+
+
+
+<!--модальное окно добавоения карты-->
+
+<div class="modal draggable fade bd-examole-modal-lg" data-keyboard="false" data-backdrop="static" id="addCard" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Новая карта</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cleanCardForm(formCard)">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+
+        <form #form  #formCard="ngForm" (ngSubmit)="onAddNewCard(formCard)">
+          <div class="col-form-label" style="min-height: 270px">
+          <div  class="d-flex justify-content-center align-items-center rounded">
+            <img class="rounded" style="max-height: 300px; max-width: 400px" src="{{this?.currentUrlCard}}" alt="">
+          </div>
+<!--          <div *ngIf="!this.horizon" class="d-flex justify-content-center align-items-center rounded">-->
+<!--            <img class="rounded" width="180px" height="250px" src="{{this?.currentUrlCard}}" alt="">-->
+<!--          </div>-->
+          </div>
+          <div class="input-group mb-3 col-sm-12 my-3">
+            <input type="file" accept="image/*" id="imgInp" name="file" class="custom-file-input" (change)="onFileSelected($event)" >
+            <label class="custom-file-label">
+              <span [hidden]="!this?.fileName">{{this?.fileName}}</span>
+              <span [hidden]="this?.fileName">Выбери файл</span>
+            </label>
+          </div>
+
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" name="horizon" id="switch" [(ngModel)]="horizon"  >
+            <label class="custom-control-label" for="switch">Горизонтально?</label>
+          </div>
+
+          <div class="input-group mb-2 col-sm-12 my-4">
+            <button class="btn btn-outline-dark btn-block btn-lg"  type="submit"   [disabled]="formCard.invalid">
+              <i *ngIf="refreshing" class="fas fa-spinner fa-spin"></i>&nbsp;&nbsp;
+              <span *ngIf="refreshing">Loading...</span>
+              <span *ngIf="!refreshing">Сохранить карту</span>
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" aria-hidden="true" id="closeCard" (click)="cleanCardForm(formCard)" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

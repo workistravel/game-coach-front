@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable, Output} from '@angular/core';
 import { environment } from '../../environments/environment';
 import { JwtHelperService } from "@auth0/angular-jwt";
-import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {User} from '../model/user';
 
@@ -16,12 +16,13 @@ export class AuthenticationService {
   constructor(private http: HttpClient) { }
 
  public login(user: User): Observable<HttpResponse<User> >{
-    return this.http.post<User>(`${this.host}/user/login`, user, {observe: 'response'});
+     return this.http.post<User>(`${this.host}/user/login`, user, {observe: 'response'});
  }
 
   public register(user: User): Observable<User >{
     return this.http.post<User >(`${this.host}/user/register`, user);
   }
+
 
   public logOut(): void{
     this.token = null;
@@ -29,10 +30,14 @@ export class AuthenticationService {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     localStorage.removeItem('users');
+    localStorage.removeItem('decks')
   }
   public saveToken(token: string): void{
     this.token = token;
     localStorage.setItem('token', token);
+  }
+  public removeUsersFromLocalCache(){
+    localStorage.removeItem('users');
   }
 
   public addUserToLocalCache(user: User): void{

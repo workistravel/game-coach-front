@@ -1,0 +1,17 @@
+
+
+.btn.btn-outline-dark{
+  color: #fff7e3;
+  border-color: #fff7e3;
+  background-color: #7f234f !important;
+}
+
+
+.form-control.ng-invalid.ng-touched{
+  border: 1px solid red;
+}
+.form-control.ng-valid.ng-touched{
+  border: 1px solid green;
+}
+
+

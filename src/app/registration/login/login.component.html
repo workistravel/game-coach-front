@@ -1,0 +1,56 @@
+
+
+<div class="modal fade " data-keyboard="false" data-backdrop="static"  id="logIn" tabindex="-1" aria-labelledby="logInLabel" aria-hidden="true" role="dialog" >
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="text-center" id="logInLabel">Log In</h5>
+        <button type="button" class="close" data-dismiss="modal"  aria-label="Close" (click)="cleanForm()">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+     <div class="modal-body">
+       <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+
+         <div class="input-group mb-3 col-sm-12">
+           <div class="input-group-append">
+             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+           </div>
+           <input type="text" class="form-control" name="email" placeholder="Email" formControlName="email">
+         </div>
+         <span class="validation" style="color: red;" *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched">
+           <small *ngIf="loginForm.get('email').errors.required">Поле email не может быть пустым</small>
+           <small *ngIf="loginForm.get('email').errors.email">Введите корректный email</small>
+         </span>
+
+         <div class="input-group mb-2 col-sm-12 my-4">
+           <div class="input-group-append">
+             <span class="input-group-text"><i class="fas fa-key"></i></span>
+           </div>
+           <input type="password" class="form-control" name="password" placeholder="Password" formControlName="password">
+         </div>
+         <span class="help-block" style="color: red;" *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched">
+           <small *ngIf="loginForm.get('password').errors.required">Поле пароль не может быть пустым</small>
+           <small *ngIf="loginForm.get('password').errors.password">Минимальная длинна 6 символов</small>
+         </span>
+
+         <div class="form-group mb-2 col-sm-12 my-4">
+           <button class="btn"  data-dismiss="modal"  name="loginForm" aria-hidden="true" ></button>
+           <button class="btn btn-outline-dark btn-lg btn-block"  type="submit"  [disabled]="loginForm.invalid || showLoading">
+           <i *ngIf="showLoading" class="fas fa-spinner fa-pulse"></i>&nbsp;&nbsp;
+                      <span *ngIf="showLoading"> Загрузка...</span>
+                      <span *ngIf="!showLoading">Вход</span></button>
+           <span class="float-left custom_1"><a (click)="goToRegistration()" name="registration" href="" data-target="#registration" data-toggle="modal" style="color: #5e5c5c; " >Регистрация</a></span>
+           <span class="float-right" ><a href="" style="color: #5e5c5c;">Нужна помощь?</a></span>
+         </div>
+
+       </form>
+     </div>
+    <div class="modal-footer">
+      <div class="col-md-1accordion2">
+        <button class="btn"  data-dismiss="modal" id="closeLogin" aria-hidden="true" (click)="cleanForm()">Выход</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+

@@ -6,13 +6,14 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {AuthenticationService} from '../service/authentication.service';
+import {AuthenticationService} from '../../service/authentication.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor(private authenticationService: AuthenticationService) {}
 
+  // здесь мы добавляем токен к страницам которые прописали за исключением указанных
   intercept(httpRequest: HttpRequest<any>, httpHandler: HttpHandler): Observable<HttpEvent<any>> {
    if(httpRequest.url.includes(`${this.authenticationService.host}/user/login`)){
      return httpHandler.handle(httpRequest);
@@ -20,7 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
    if(httpRequest.url.includes(`${this.authenticationService.host}/user/register`)){
      return httpHandler.handle(httpRequest);
    }
-   // if(httpRequest.url.includes(`${this.authenticationService.host}/user/resetpassword/**`)){
+   // if(httpRequest.url.includes(`${this.authenticationService.host}/main`)){
    //   return httpHandler.handle(httpRequest);
    // }
 

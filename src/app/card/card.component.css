@@ -1,0 +1,14 @@
+
+.btn.btn-outline-dark{
+  color: #fff7e3;
+  border-color: #fff7e3;
+  background-color: #7f234f !important;
+}
+.btn.btn-outline-dark:hover{
+  color: black;
+}
+.close.delete{
+color: red;
+  margin-left: 12rem;
+  margin-bottom: auto;
+}

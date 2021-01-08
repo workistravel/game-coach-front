@@ -1,0 +1,47 @@
+
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<body>
+
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark" style="background-color: #7f234f">
+  <div class="container" >
+    <a [routerLink]="['/main']" class="navbar-brand" >Game 4 coach</a>
+    <button class="navbar-toggler" type="button"  style="background-color:  #fff7e3;"  data-toggle="collapse" data-target="#navbarContent"
+            aria-controls="navbarContent" aria-expanded="false">
+      <span class="navbar-toggler-icon" ></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav mr-auto my-1 mb-2">
+        <li class="nav-item"><a href="" class="nav-link">Начало</a></li>
+        <li class="nav-item"><a href="" class="nav-link">Коучинг</a></li>
+        <li class="nav-item"><a href="" class="nav-link">Обо мне</a></li>
+      </ul>
+      <div *ngIf="presence" class="md-2" style="color:#fff7e3; " >
+        Привет, {{ currentUser?.firstName}}
+      </div>
+      <div class="d-flex">
+
+        <button *ngIf="!presence"  class="btn btn-outline-dark " data-target="#logIn"  [routerLink]="['/main', 'login']"  data-toggle="modal">Вход</button>
+        <button *ngIf="presence" class="btn btn-outline-dark ml-3" (click)="onLogOut()">Выход<i class="fas fa-sign-in-alt ml-1"></i></button>
+        <button *ngIf="isAdmin" name="management" class="btn btn-outline-dark ml-3" [routerLink]="['/management']">Management</button>
+        <button *ngIf="presence" name="management" class="btn btn-outline-dark ml-3" (click)="goToHome()">Настройки</button>
+      </div>
+    </div>
+  </div>
+</nav>
+        <app-login (onAdd)="updatePresence($event)"></app-login>
+
+
+
+<router-outlet></router-outlet>
+
+  <div class="container">
+    <div class="row">
+      <div>
+      </div>
+    </div>
+  </div>
+</body>
+
+
+
+
