@@ -1,0 +1,117 @@
+
+
+<body>
+  <div class="card shadow p-3 mb-5 bg-white rounded">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <div class="navbar-nav">
+          <ul class="nav nav-pills mr-auto my-1 mb-2">
+            <li class="nav-item"><a class="btn btn-outline-dark ml-2">  Меню </a></li>
+            <li><a class="btn btn-outline-dark ml-2" type="button" data-toggle="tab" *ngFor="let game of currentGames" (click)="selectGame(game)"  href="#{{game.name}}">{{game.name}}</a></li>
+            <li class="nav-item"><a class="btn btn-outline-dark ml-2" data-toggle="modal"  data-target="#addNewNameForGame"><i class="fa fa-plus" ></i>  Добавить игру </a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <hr>
+
+
+
+    <!---------общий контейнер------->
+    <div class="container">
+      <div class="tab-content mt-3" >
+<!--------------------------------------->
+
+           <!--------------редактор суждений-->
+        <div  class="container tab-pane fade" id="judgments" >
+          <div>Hello</div>
+
+        </div>
+
+        <!----------игра--выбранная------->
+        <div  class="container tab-pane fade" id="{{this?.currentGame.name}}" >
+          <button type="button" class="close" aria-label="delete"  (click)="deleteGame(currentGame.id)">
+            <span aria-hidden="true" style="color: brown">delete</span>
+          </button>
+          <h3 class="text-center mb-lg-4">игра {{this?.currentGame.name}}</h3>
+            <div class="row">
+              <div class="card-group mx-auto mb-4 " style="width: 200px"     *ngFor=" let stepShow of this?.currentGame.steps">
+                <form #formAddStep="ngForm" (ngSubmit)="onSaveStep(formAddStep)">
+                <div class="card">
+                  <div class="card-header bg-transparent text-center mb-2"><h3></h3>{{stepShow.name}}
+
+                      <div class="form-group">
+                      <div class="input-group input-group-sm text-center">
+                        <input type="text" class="form-control" ngModel="{{stepShow?.title}}"  placeholder="название шага"  name="nameStep" required/>
+                      </div>
+                    </div>
+                    </div>
+
+
+                    <div class="p-1  justify-content-center align-items-center shadow mx-auto" >
+                      <img class="card-img-top img-fluid   shadow" style="max-width: 100px; max-height: 150px" src="{{this.getPicture(stepShow.deckId)}}" alt="">
+                    </div>
+                    <div class="card-body">
+
+                    <div class="form-group  mb-3 ">
+                      <lable>Выбранная колода:</lable>
+                      <select class="form-control form-control-sm" id="inputGroupSelect01" name="nameDeck" ngModel>
+                        <option value="" disabled>{{this.nameDeck}}</option>
+                        <option [defaultSelected]="" *ngFor="let nameDeck of this.nameOfDecks" [ngValue]="nameDeck">{{this.nameDeck}}</option>
+                      </select>
+                    </div>
+
+                  </div>
+                  <div class="card-footer p-2 text-center">
+                    <a *ngIf="stepShow.name !== 'Resource' " type="button" class="btn btn-outline-dark btn-sm" data-toggle="tab" href="#judgments" (click)="goToAddJudgments(stepShow)">суждения</a>
+                    <button  type="submit" class="btn btn-outline-dark btn-sm float-right" (click)="saveStep(stepShow)" [disabled]="formAddStep.invalid ">сохранить</button>
+                  </div>
+                </div>
+                </form>
+              </div>
+            </div>
+            <hr>
+            <button  type="button"  class="btn btn-outline-dark btn-sm float-right">сохранить игру</button>
+
+        </div>
+
+
+
+<!--------------------------------------->
+      </div>
+    </div>
+<!--    контейнер общий-->
+  </div>
+
+
+
+
+<!--модальное окно добавления игры (названия)-->
+<div class="modal draggable fade bd-examole-modal-lg" id="addNewNameForGame" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Имя игре</h5>
+          </div>
+            <form #nameClean  #newName="ngForm" (ngSubmit)="onAddNameForGame(newName)">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="name">Введите название игры</label>
+                  <input type="text" name="name" id="name" required ngModel class="form-control" placeholder="Например: SWAT">
+                  </div>
+                  <button type="submit"  class="btn btn-outline-dark" [disabled]="newName.invalid" >Save</button>
+                </div>
+              <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" aria-hidden="true" id="close-add-name" data-dismiss="modal" (click)="cleanFormIfCancel(newName)">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!------------------------------------>
+
+
+</body>
