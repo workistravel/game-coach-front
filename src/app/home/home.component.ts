@@ -134,7 +134,8 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.refreshing = false;
         },
         (errorResponse: HttpErrorResponse) => {
-          this.sendNotification(NotificationType.ERROR, errorResponse.error.message)
+          this.sendNotification(NotificationType.ERROR, errorResponse.error.message);
+          this.refreshing = false;
         }
       )
     );

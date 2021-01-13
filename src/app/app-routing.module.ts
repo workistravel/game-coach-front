@@ -1,21 +1,22 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {UserComponent} from './user/user.component';
 import {AuthenticationGuard} from './scurity/guard/authentication.guard';
 import {HomeComponent} from './home/home.component';
 import {MainComponent} from './main/main.component';
 import {LoginComponent} from './registration/login/login.component';
 import {RegisterComponent} from './registration/register/register.component';
 import {ManagementComponent} from './management/management.component';
-import {CardsComponent} from './cards/cards.component';
-import {CardComponent} from './card/card.component';
+import {EditComponent} from './gameEditor/edit/edit.component';
+import {CardComponent} from './gameEditor/card/card.component';
+import {PlayingDeskComponent} from './gameEditor/playing-desk/playing-desk.component';
 
 const routes: Routes = [
-  {path: 'user/home', component: HomeComponent, canActivate: [AuthenticationGuard]},
-  {path: 'user/management', component: UserComponent, canActivate: [AuthenticationGuard]},
-  {path: 'cards', component: CardsComponent, canActivate: [AuthenticationGuard] ,
+  {path: 'home', component: HomeComponent, canActivate: [AuthenticationGuard]},
+  // {path: 'user/management', component: UserComponent, canActivate: [AuthenticationGuard]},
+  {path: 'edit', component: EditComponent, canActivate: [AuthenticationGuard] ,
     children: [
-      {path: 'card', component: CardComponent , canActivate: [AuthenticationGuard]}
+      { path: 'card', component: CardComponent , canActivate: [AuthenticationGuard]},
+      { path: 'playing-desk', component: PlayingDeskComponent , canActivate: [AuthenticationGuard]},
     ]},
   {path: 'management', component: ManagementComponent, canActivate: [AuthenticationGuard]},
   {path: 'main', component: MainComponent,

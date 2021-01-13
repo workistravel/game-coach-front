@@ -12,3 +12,10 @@ color: red;
   margin-left: 12rem;
   margin-bottom: auto;
 }
+
+.grow:hover {
+  -webkit-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  transform: scale(1.05);
+}
+

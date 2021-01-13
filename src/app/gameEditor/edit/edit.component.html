@@ -9,8 +9,9 @@
     </button>
     <div class="collapse navbar-collapse " id="navbarContent">
       <ul class="nav nav-pills mr-auto my-1 mb-2">
-
+        <li class="nav-item"><a class="nav-link  ml-3" [routerLink]="['/home']" ><i class="fas fa-chevron-circle-left"></i> Назад</a></li>
         <li class="nav-item"><a class="nav-link  ml-3  active" data-toggle="tab"  href="#decks"><i class="fa fa-cogs"></i> Колоды</a></li>
+        <li class="nav-item"><a class="nav-link  ml-3 " data-toggle="tab"  href="#playingDesk" (click)="goToEditPlayingDesk()"><i class="fa fa-cogs"></i> Поле</a></li>
       </ul>
       <div *ngIf="presence" class="md-2" style="color:#fff7e3; " >
         Привет, {{ currentUser?.firstName}}
@@ -20,41 +21,14 @@
   </div>
 </nav>
 
+
+
+<!--общий контейне-->
     <div class="container-lg">
       <div class="tab-content mt-3" >
 
-
-<!--        редактор карт-->
-
-        <div class="container  tab-pane fade " id="card" >
-
-          <div class="container row">
-
-            <div class="container col-3">
-              <div class="card shadow p-3 bg-white rounded">
-                    <div class="navbar-nav">
-                      <img alt="" class="card-img-top p-3" style="max-width: 200px" src="{{currentDeck?.backOfCardUrl}}">
-                      <h5 class="col-12">{{currentDeck?.name}}</h5>
-                    </div>
-              </div>
-          </div>
-
-            <div class="container col-9" >
-              <div class="card shadow p-4 mb-5 bg-white rounded">
-                <h3>Карты в колоде</h3>
-                <hr>
-<!--                [onAdd]="currentDeck"-->
-                 <app-card [inputDeck]="outputDeck" [inputCards]="outputCards" ></app-card>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-
-
-        <!--              cards decks -->
-        <div class="container tab-pane fade show active" id="decks" >
+        <!---------------------------колоды------------------------>
+        <div class="container tab-pane fade active show" id="decks" >
           <div class="card shadow p-3 mb-5 bg-white rounded">
               <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
@@ -67,9 +41,9 @@
                   </div>
               </nav>
               <hr>
-<!--            колоды-->
+               <!-- колоды-->
                 <div class="row bootstrap snippets">
-                  <div class="card shadow mx-auto mb-3 " style="width:320px;"  *ngFor=" let deck of decks">
+                  <div class="card shadow mx-auto mb-3 grow" style="width:320px;"  *ngFor=" let deck of decks">
                     <img alt="" class="card-img-top p-3 shadow" src="{{deck?.backOfCardUrl}}">
                     <div class="card-body">
                       <h4 class="card-title text-center">{{deck.name}}</h4>
@@ -78,11 +52,42 @@
                     </div>
                   </div>
                 </div>
-
             </div>
         </div>
+
+
+        <!--редактор карт-->
+        <div class="container  tab-pane fade " id="card" >
+          <div class="container row">
+            <div class="container col-3">
+              <div class="card shadow p-3 bg-white rounded">
+                <div class="navbar-nav">
+                  <img alt="" class="card-img-top p-3" style="max-width: 200px" src="{{currentDeck?.backOfCardUrl}}">
+                  <h5 class="col-12">{{currentDeck?.name}}</h5>
+                </div>
+              </div>
+            </div>
+            <div class="container col-9" >
+              <div class="card shadow p-4 mb-5 bg-white rounded">
+                <h3>Карты в колоде</h3>
+                <hr>
+                <app-card [inputDeck]="outputDeck" [inputCards]="outputCards" ></app-card>
+              </div>
+            </div>
+          </div>
+        </div>
+<!---------------------------------------колоды конец------------------------------->
+
+        <div class="container tab-pane fade  " id="playingDesk" >
+          <app-playing-desk [inputCurrentUser]="outputUser"></app-playing-desk>
+        </div>
+
+<!--    общий контейнер    -->
       </div>
     </div>
+<!--------------------------->
+
+
 
 
 <!--deck editor-->
@@ -125,7 +130,6 @@
                   </button>
                 </div>
               </form>
-
          </div>
          <div class="modal-footer">
            <a class="btn btn-outline-dark" data-toggle="tab"  href="#card" (click)="closeEdit()"> Добавить карты?</a>
@@ -134,6 +138,9 @@
     </div>
   </div>
 </div>
+
+
+
 
 <!--modal addDeck-->
 
@@ -180,6 +187,9 @@
     </div>
   </div>
 </div>
+
+
+
 
 </body>
 

@@ -1,16 +1,16 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, NgForm, Validators,} from '@angular/forms';
-import {Deck} from '../model/deck';
-import {CardService} from '../service/card.service';
-import {User} from '../model/user';
-import {environment} from '../../environments/environment';
-import {CustomHttpResponse} from '../model/custom-http-response';
+import {Deck} from '../../model/deck';
+import {CardService} from '../../service/card.service';
+import {User} from '../../model/user';
+import {environment} from '../../../environments/environment';
+import {CustomHttpResponse} from '../../model/custom-http-response';
 import {HttpErrorResponse} from '@angular/common/http';
-import {NotificationType} from '../enum/notification-type.enum';
+import {NotificationType} from '../../enum/notification-type.enum';
 import {SubSink} from 'subsink';
-import {NotificationService} from '../service/notification.service';
-import {Card} from '../model/card';
-import {AuthenticationService} from '../service/authentication.service';
+import {NotificationService} from '../../service/notification.service';
+import {Card} from '../../model/card';
+import {AuthenticationService} from '../../service/authentication.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -18,14 +18,12 @@ import {Router} from '@angular/router';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css']
 })
-export class CardComponent implements OnInit {
+export class CardComponent implements OnInit, OnDestroy {
   @ViewChild('form') form: ElementRef;
   @Input() inputDeck: Deck;
   @Input() inputCards: Card[];
   public refreshing: boolean;
-  // public currentDeck= new Deck();
   public currentUser: User;
-  // public cards: Card[];
   public card= new Card();
   public horizon = false;
   public cardImage: File;
@@ -45,10 +43,13 @@ export class CardComponent implements OnInit {
     this.currentUser = this.authenticationService.getUserFromLocalCache();
 
   }
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
 // сохранить в базу фото
   onAddNewCard(formCard: NgForm) {
+    this.refreshing = true;
     if(this.currentUrlCard !==  environment.defaultPhotoFront){
-      this.refreshing = true;
       this.card.horizon = formCard.value;
       const formData = new FormData();
       formData.append('loggedEmail', this.currentUser.email );
@@ -58,10 +59,10 @@ export class CardComponent implements OnInit {
       this.subs.add(
         this.cardService.addCard(formData).subscribe(
           (response: Card) => {
-            this.card = response;
-            this.inputCards.push(this.card);
+            this.inputCards.unshift(response);
             this.refreshing= false;
             this.form.nativeElement.reset();
+
           },
           (errorResponse: HttpErrorResponse) => {
             this.sendNotification(NotificationType.ERROR, errorResponse.error.message)
@@ -113,10 +114,6 @@ export class CardComponent implements OnInit {
         this.removePicture(this.currentUrlCard);
       }
     }
-    // formCard.resetForm();
-    // formCard.reset();
-    // this.formCard.nativeElement.reset();
-    // console.log(this.formCard);
     this.currentUrlCard = environment.defaultPhotoFront;
     this.card = new Card();
     this.fileName = null;
@@ -174,13 +171,22 @@ export class CardComponent implements OnInit {
     )
   }
 
-
   loadInfoForWork() {
     this.loadListCard(this.inputDeck.id);
   }
 
   goToMenu() {
-    this.router.navigateByUrl('/user/home');
+    this.router.navigateByUrl('/home');
   }
+
+  openCard(card: Card) {
+    this.card = card;
+    this.clickButton('openCard')
+  }
+
+  private clickButton(buttonId: string): void{
+    document.getElementById(buttonId).click();
+  }
+
 
 }

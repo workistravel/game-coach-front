@@ -17,9 +17,10 @@ export class CardService {
   public addDeck(formData: FormData): Observable<Deck>{
     return this.http.post<Deck>(`${this.host}/deck/add`, formData);
   }
-  public getDeck(email: string): Observable<Deck[]>{
+  public getDecks(email: string): Observable<Deck[]>{
     return this.http.get<Deck[]>(`${this.host}/deck/list/${email}`);
   }
+
 
   public deleteDeck(email:string, deckId: string ): Observable<CustomHttpResponse>{
     return this.http.delete<CustomHttpResponse>(`${this.host}/deck/delete/${email}/${deckId}`);

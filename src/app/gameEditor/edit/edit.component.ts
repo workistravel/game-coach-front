@@ -1,28 +1,29 @@
 import {Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {AuthenticationService} from '../service/authentication.service';
-import {User} from '../model/user';
+import {AuthenticationService} from '../../service/authentication.service';
+import {User} from '../../model/user';
 import {Router} from '@angular/router';
-import {NotificationType} from '../enum/notification-type.enum';
-import {NotificationService} from '../service/notification.service';
+import {NotificationType} from '../../enum/notification-type.enum';
+import {NotificationService} from '../../service/notification.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {CardService} from '../service/card.service';
+import {CardService} from '../../service/card.service';
 import {SubSink} from 'subsink';
 import {HttpErrorResponse} from '@angular/common/http';
-import {Deck} from '../model/deck';
-import {CustomHttpResponse} from '../model/custom-http-response';
-import {environment} from '../../environments/environment';
-import {Card} from '../model/card';
+import {Deck} from '../../model/deck';
+import {CustomHttpResponse} from '../../model/custom-http-response';
+import {environment} from '../../../environments/environment';
+import {Card} from '../../model/card';
 
 @Component({
-  selector: 'app-cards',
-  templateUrl: './cards.component.html',
-  styleUrls: ['./cards.component.css']
+  selector: 'app-edit',
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.component.css']
 })
-export class CardsComponent implements OnInit ,OnDestroy {
+export class EditComponent implements OnInit ,OnDestroy {
   @ViewChild('formAdd') formAdd: ElementRef;
   @ViewChild('formEdit') formEdit: ElementRef;
   public outputDeck: Deck;
   public outputCards: Card[];
+  public outputUser: User;
 
   public currentUser = new User();
   public oldUrlPicture: string;
@@ -97,7 +98,7 @@ export class CardsComponent implements OnInit ,OnDestroy {
           this.addDeckToStorage();
           this.urlForPresent = environment.defaultPhoto;
           this.formAdd.nativeElement.reset();
-          CardsComponent.clickButton('closeDeck');
+          EditComponent.clickButton('closeDeck');
           this.sendNotification(NotificationType.SUCCESS,`${response.name}  колода добавленна успешно` );
         },
         (errorResponse: HttpErrorResponse) => {
@@ -111,7 +112,7 @@ export class CardsComponent implements OnInit ,OnDestroy {
 // добавляк колоды в хранилище
   private addDeckToStorage(){
     this.subs.add(
-      this.cardService.getDeck(this.currentUser.email).subscribe(
+      this.cardService.getDecks(this.currentUser.email).subscribe(
         (response: Deck[]) =>{
           this.cardService.addDecksToLocalCache(response);
           this.decks = response;
@@ -254,7 +255,7 @@ export class CardsComponent implements OnInit ,OnDestroy {
           this.sendNotification(NotificationType.DEFAULT, response.message);
           this.refreshing= false;
           this.addDeckToStorage();
-          CardsComponent.clickButton('closeEdit');
+          EditComponent.clickButton('closeEdit');
         },
         (errorResponse: HttpErrorResponse) => {
           this.sendNotification(NotificationType.ERROR, errorResponse.error.message);
@@ -267,10 +268,14 @@ export class CardsComponent implements OnInit ,OnDestroy {
   closeEdit() {
     this.outputDeck= this.currentDeck;
     this.outputCards = this.currentDeck.cards;
-    CardsComponent.clickButton('closeEdit');
+    EditComponent.clickButton('closeEdit');
   }
 
   goToMenu() {
-    this.router.navigateByUrl('/user/home');
+    this.router.navigateByUrl('/home');
+  }
+
+  goToEditPlayingDesk() {
+    this.outputUser = this.currentUser;
   }
 }

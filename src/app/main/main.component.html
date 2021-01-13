@@ -23,7 +23,7 @@
         <button *ngIf="!presence"  class="btn btn-outline-dark " data-target="#logIn"  [routerLink]="['/main', 'login']"  data-toggle="modal">Вход</button>
         <button *ngIf="presence" class="btn btn-outline-dark ml-3" (click)="onLogOut()">Выход<i class="fas fa-sign-in-alt ml-1"></i></button>
         <button *ngIf="isAdmin" name="management" class="btn btn-outline-dark ml-3" [routerLink]="['/management']">Management</button>
-        <button *ngIf="presence" name="management" class="btn btn-outline-dark ml-3" (click)="goToHome()">Настройки</button>
+        <button *ngIf="presence" class="btn btn-outline-dark ml-3" (click)="goToHome()">Настройки</button>
       </div>
     </div>
   </div>

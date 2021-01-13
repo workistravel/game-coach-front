@@ -94,12 +94,12 @@ export class MainComponent implements OnInit, OnDestroy{
     document.getElementById(buttonId).click();
   }
 
-  goToManagement() {
-    this.router.navigateByUrl('user/management');
-  }
+  // goToManagement() {
+  //   this.router.navigateByUrl('/management');
+  // }
 
   goToHome() {
-    this.router.navigateByUrl('user/home');
+    this.router.navigateByUrl('/home');
   }
 
 

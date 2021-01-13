@@ -10,7 +10,6 @@ import {AuthInterceptor} from './scurity/intrceptor/auth.interceptor';
 import {AuthenticationGuard} from './scurity/guard/authentication.guard';
 import {NotificationModule} from './notification.module';
 import {NotificationService} from './service/notification.service';
-import { UserComponent } from './user/user.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { MainComponent } from './main/main.component';
@@ -19,23 +18,24 @@ import { RegisterComponent } from './registration/register/register.component';
 import { ManagementComponent } from './management/management.component';
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
-import { CardsComponent } from './cards/cards.component';
-import { CardComponent } from './card/card.component';
-import {CardService} from './service/card.service';
+import { EditComponent } from './gameEditor/edit/edit.component';
+import { CardComponent } from './gameEditor/card/card.component';
+import { CardService } from './service/card.service';
+import { PlayingDeskComponent } from './gameEditor/playing-desk/playing-desk.component';
 
 registerLocaleData(localeRu, 'ru');
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent,
     HomeComponent,
     MainComponent,
     LoginComponent,
     RegisterComponent,
     ManagementComponent,
-    CardsComponent,
-    CardComponent
+    EditComponent,
+    CardComponent,
+    PlayingDeskComponent
   ],
     imports: [
         FormsModule,

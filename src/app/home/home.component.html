@@ -10,11 +10,11 @@
     </button>
     <div class="collapse navbar-collapse " id="navbarContent">
       <ul class="nav nav-pills mr-auto my-1 mb-2">
-        <li class="nav-item"><a class="nav-link  ml-3" [routerLink]="['/main']" ><i class="fas fa-chevron-circle-left"></i> Назад</a></li>
+        <li class="nav-item"><a class="nav-link  ml-3" [routerLink]="['/main']" ><i class="fas fa-chevron-circle-left"></i> Главная</a></li>
         <li class="nav-item"><a class="nav-link  ml-3 active" data-toggle="tab"  href="#profile"><i class="fa  fa-user"></i> Профиль</a></li>
         <li class="nav-item"><a class="nav-link  ml-3 " data-toggle="tab"  href="#change-password"><i class="fa fa-cogs"></i> Пароль</a></li>
 
-        <li class="nav-item"><a class="nav-link  ml-3" *ngIf="isAdmin || isHr" href="/cards" [routerLink]="['/cards']"><i class="fas fa-puzzle-piece"></i> Редактор игр</a></li>
+        <li class="nav-item"><a class="nav-link  ml-3" *ngIf="isAdmin || isHr"  [routerLink]="['/edit']"><i class="fa fa-gamepad" aria-hidden="true"></i> Редактор игр</a></li>
       </ul>
       <div *ngIf="presence" class="md-2" style="color:#fff7e3; " >
         Привет, {{ currentUser?.firstName}}
@@ -251,6 +251,8 @@
          (change)="onProfileImageChange($event.target.files[0].name, $event.target.files[0]); onUpdateProfileImage()"
          name="profile-image-input" id="profile-image-input" placeholder="file" accept="image/*"/>
 </form>
+
+
 </body >
 
 
