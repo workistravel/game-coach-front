@@ -7,15 +7,14 @@ import {NotificationService} from '../../service/notification.service';
 import {GameEditorService} from '../../service/game-editor.service';
 import {SubSink} from 'subsink';
 import {AuthenticationService} from '../../service/authentication.service';
-import {Card} from '../../model/card';
 import {NotificationType} from '../../enum/notification-type.enum';
 import {HttpErrorResponse} from '@angular/common/http';
-import {stringify} from 'querystring';
 import { Game } from '../../model/game';
 import {CustomHttpResponse} from '../../model/custom-http-response';
 import {Router} from '@angular/router';
 import {Step} from '../../model/step';
 import {CardService} from '../../service/card.service';
+import {Judgment} from '../../model/judgment';
 
 @Component({
   selector: 'app-playing-desk',
@@ -26,15 +25,17 @@ export class PlayingDeskComponent implements OnInit {
   @Input() inputCurrentUser: User;
   @ViewChild('nameClean') nameClean: ElementRef;
   @ViewChild('formStep') formStep: ElementRef;
+  @ViewChild('addJudgment') addJudgment: ElementRef;
 
 public refreshing: boolean;
   public nameGame: string;
   public currentUser: User;
   public currentGame = new Game();
   public step = new Step();
+  public judgment = new Judgment();
+  public judgments: Judgment[] = [];
   // public words: string[]= [];
   public nameDeck: string;
-  public selectedName: string;
   public nameOfDecks: string[]= [];
   public defaultUrlDeck: string;
   public currentDeck: Deck;
@@ -58,7 +59,6 @@ public refreshing: boolean;
 
   }
 
-
   onSaveStep(form: NgForm) {
     const  nameSelectedDeck = form.value['nameDeck'];
     const  nameStep = form.value['nameStep'];
@@ -79,10 +79,8 @@ public refreshing: boolean;
         (errorResponse: HttpErrorResponse) => {
           this.sendNotification(NotificationType.ERROR, errorResponse.error.message);
         }
-      )
-    )
+      ));
      }
-
   }
 
   saveStep(stepShow: never) {
@@ -96,7 +94,29 @@ public refreshing: boolean;
      // currentDeck.find(x => x.id == this.step.deckId);
     // this.words = game.name.split('');
     // this.words.unshift('Resource');
+  }
 
+  // добавляем суждения в базу
+  onAddNewJudgment(newJudgment: NgForm) {
+    this.refreshing= true;
+    const text = newJudgment.value['judgment'];
+    const formData = new FormData();
+    formData.append('loggedEmail',this.currentUser.email  );
+    formData.append('stepId', this.step.id);
+    formData.append("text", text);
+    this.clickButton('close-add-judgment');
+    this.subs.add(
+      this.gameEditorService.addJudgment(formData).subscribe(
+        (response: Step) => {
+          this.getJudgments(this.step.id);
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.sendNotification(NotificationType.ERROR, errorResponse.error.message);
+          this.refreshing = false;
+        },
+        ()=> newJudgment.resetForm()
+      )
+    );
   }
 
 // добавляем название новой игры и получаем для нее каркас
@@ -119,10 +139,8 @@ public refreshing: boolean;
           this.refreshing= false;
         },
         ()=> nameForm.resetForm()
-
       )
     );
-
   }
 
   // получаем корректые игры из базы данных
@@ -136,15 +154,12 @@ public refreshing: boolean;
         (errorResponse: HttpErrorResponse) => {
           this.sendNotification(NotificationType.ERROR, errorResponse.error.message)
         }
-
-      )
-    )
-
+      ));
   }
-  public cleanFormIfCancel(nameForm: NgForm) {
-    nameForm.reset();
-    this.clickButton('close-add-name');
-  }
+
+
+
+  // удаление игры
   public deleteGame(gameId: string): void {
     this.subs.add(
       this.gameEditorService.deleteGame(this.currentUser.email, gameId).subscribe(
@@ -156,18 +171,11 @@ public refreshing: boolean;
         (errorResponse: HttpErrorResponse) => {
           this.sendNotification(NotificationType.ERROR, errorResponse.error.message)
         }
-      )
-    );
+      ));
   }
 
 
 
-
-
-
-  private clickButton(buttonId: string): void{
-    document.getElementById(buttonId).click();
-  }
 
   private sendNotification(notificationType: NotificationType, message: string): void {
     if(message){
@@ -177,14 +185,12 @@ public refreshing: boolean;
     }
   }
 
-  public selectDeck(id: string) {
-    console.log(id)
-
-  }
 
 
-  getPicture(deckId: any): string {
-     this.currentDeck = this.currentDecks.find(x=> x.id == deckId);
+  getPicture(deckId: string): string {
+    if(this.currentDecks!==undefined){
+      this.currentDeck = this.currentDecks.find(x=> x.id === deckId);
+    }
     if(this.currentDeck !==undefined){
       this.nameDeck = this.currentDeck.name;
       return this.currentDeck.backOfCardUrl;
@@ -201,10 +207,74 @@ public refreshing: boolean;
   }
 
 
-  goToAddJudgments(step: Step) {
-    console.log(step);
-    console.log(this.currentGame);
-    this.currentGame= new Game();
+  private getJudgments(stepId: string) {
+    this.subs.add(
+      this.gameEditorService.getJudgments(stepId).subscribe(
+        (response: Judgment[]) => {
+          this.judgments = response;
+          this.sendNotification(NotificationType.SUCCESS,`${response.length}  суждений загружено для пользователя ${this.currentUser.firstName}` );
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.sendNotification(NotificationType.ERROR, errorResponse.error.message);
+        }
+      )
+    );
+  }
 
+  deleteJudgment(id: string) {
+    this.subs.add(
+      this.gameEditorService.deleteJudgment(id).subscribe(
+        (response: CustomHttpResponse) =>  {
+          this.sendNotification(NotificationType.SUCCESS,   response.message.toLowerCase() );
+          this.getJudgments(this.step.id);
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.sendNotification(NotificationType.ERROR, errorResponse.error.message)
+        }
+      )
+    );
+  }
+
+  editJudgment(id: string) {
+    this.judgment = this.judgments.find(x => x.id === id);
+    this.clickButton('openEditJudgment');
+  }
+
+  onEditJudgment(editJudgment: NgForm) {
+   const judgment = editJudgment.value['newJudgment'];
+    const formData = new FormData();
+    formData.append('judgmentId',this.judgment.id  );
+    formData.append('text', judgment);
+    this.clickButton('close-edit-judgment');
+    this.subs.add(
+      this.gameEditorService.editJudgment(formData).subscribe(
+        (response: Judgment) => {
+          this.getJudgments(this.step.id);
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.sendNotification(NotificationType.ERROR, errorResponse.error.message)
+        },
+        () => editJudgment.resetForm()
+      )
+    );
+  }
+  public cleanFormIfCancel(nameForm: NgForm) {
+    nameForm.reset();
+    this.clickButton('close-add-name');
+    this.clickButton('close-add-judgment');
+    this.clickButton('close-edit-judgment');
+  }
+
+  goToAddJudgments(step: Step) {
+    this.step = step;
+    this.getJudgments(this.step.id);
+  }
+
+  onAddJudgment() {
+    this.clickButton('openAddJudgment');
+  }
+
+  private clickButton(buttonId: string): void{
+    document.getElementById(buttonId).click();
   }
 }

@@ -7,6 +7,7 @@ export class Step {
   constructor() {
     this.name = '';
     this.deckId = '';
+    this.title = '';
     this.judgments = [];
   }
 }

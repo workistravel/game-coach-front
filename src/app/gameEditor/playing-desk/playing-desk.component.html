@@ -7,7 +7,7 @@
       <div class="container-fluid">
         <div class="navbar-nav">
           <ul class="nav nav-pills mr-auto my-1 mb-2">
-            <li class="nav-item"><a class="btn btn-outline-dark ml-2">  Меню </a></li>
+            <li class="nav-item"><a class="btn btn-outline-dark ml-2" [routerLink]="['/home']" >  Меню </a></li>
             <li><a class="btn btn-outline-dark ml-2" type="button" data-toggle="tab" *ngFor="let game of currentGames" (click)="selectGame(game)"  href="#{{game.name}}">{{game.name}}</a></li>
             <li class="nav-item"><a class="btn btn-outline-dark ml-2" data-toggle="modal"  data-target="#addNewNameForGame"><i class="fa fa-plus" ></i>  Добавить игру </a></li>
           </ul>
@@ -15,6 +15,13 @@
       </div>
     </nav>
     <hr>
+
+
+    <button [hidden]="true" type="button" id="openAddJudgment" data-toggle="modal" data-target="#addJudgment">
+    </button>
+
+    <button [hidden]="true" type="button" id="openEditJudgment" data-toggle="modal" data-target="#editJudgment">
+    </button>
 
 
 
@@ -25,9 +32,42 @@
 
            <!--------------редактор суждений-->
         <div  class="container tab-pane fade" id="judgments" >
-          <div>Hello</div>
+          <div class="row">
+            <div class="p-1  mx-auto col-2" >
+              <img class="card-img-top img-fluid   shadow" style="max-width: 100px; max-height: 150px" src="{{this.getPicture(this.step.deckId)}}" alt="">
+            </div>
+            <div class="text-sm-right col-7">
+              <h3 class="text-left mb-3">Выбрана игра:  {{this?.currentGame.name}}</h3>
+              <h4 class="text-left">Выбран шаг игры: {{this.step.title}} - символ: {{this.step.name}}</h4>
+              <button class="btn btn-outline-dark ml-2" (click)="onAddJudgment()">Add</button>
+            </div>
+         </div>
+          <hr>
+          <table class="table table-hover">
+            <thead class="table-borderless">
+              <tr class="text-center">
+                <th>номер</th>
+                <th>послание</th>
+                <th>управление</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let judgment of judgments; let i=index ">
+              <tr >
+                <td class="text-center" >{{i+1}}</td>
+                <td >{{judgment.judgment}}</td>
+                <td class="text-right">
+                  <div class="btn-group">
+                    <button class="btn btn-outline-dark" (click)="editJudgment(judgment.id)"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-outline-dark" (click)="deleteJudgment(judgment.id)"><i class="fas fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
 
         </div>
+           <!-------------------- -->
 
         <!----------игра--выбранная------->
         <div  class="container tab-pane fade" id="{{this?.currentGame.name}}" >
@@ -47,7 +87,6 @@
                       </div>
                     </div>
                     </div>
-
 
                     <div class="p-1  justify-content-center align-items-center shadow mx-auto" >
                       <img class="card-img-top img-fluid   shadow" style="max-width: 100px; max-height: 150px" src="{{this.getPicture(stepShow.deckId)}}" alt="">
@@ -113,5 +152,56 @@
 </div>
 <!------------------------------------>
 
+
+<!--модальное окно добавлениия выражений-->
+  <div class="modal draggable fade bd-examole-modal-lg"  data-keyboard="false" data-backdrop="static" id="addJudgment" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Введите новое суждение</h5>
+          </div>
+          <form #addJudgment  #newJudgment="ngForm" (ngSubmit)="onAddNewJudgment(newJudgment)">
+
+            <div class="modal-body">
+              <div class="form-group">
+                <textarea class="form-control rounded-0" id="judgment" name="judgment" rows="3" placeholder="Ваш текст..." required ngModel></textarea>
+              </div>
+              <button type="submit"  class="btn btn-outline-dark" [disabled]="newJudgment.invalid">Save</button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-dark" aria-hidden="true" id="close-add-judgment" data-dismiss="modal"  (click)="cleanFormIfCancel(newJudgment)">Close</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+<!---------------------------------------->
+<!-------------редактор суждения---------->
+  <div class="modal draggable fade bd-examole-modal-lg"  data-keyboard="false" data-backdrop="static" id="editJudgment" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Введите новое суждение</h5>
+          </div>
+          <form   #formEditJudgment="ngForm" (ngSubmit)="onEditJudgment(formEditJudgment)">
+
+            <div class="modal-body">
+              <div class="form-group">
+                <textarea class="form-control rounded-0" id="newJudgment" name="newJudgment" rows="3"  required ngModel="{{this.judgment.judgment}}"></textarea>
+              </div>
+              <button type="submit"  class="btn btn-outline-dark" [disabled]="formEditJudgment.invalid">Save</button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-dark" aria-hidden="true" id="close-edit-judgment" data-dismiss="modal"  (click)="cleanFormIfCancel(formEditJudgment)">Close</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!---------------------------------------->
 
 </body>
