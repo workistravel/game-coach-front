@@ -94,7 +94,6 @@ export class ManagementComponent implements OnInit, OnDestroy {
     this.subs.add(
       this.userService.updateUser(formData).subscribe(
         (response: User) =>{
-          console.log(response);
           this.clickButton('closeEditUserModalButton');
           this.getUsers(false);
           this.fileName = null;

@@ -45,7 +45,6 @@ input.form-control{
 }
 .card{
   background-color: #fff7e3;
-  border-color: #7f234f;
 }
 img.card-img-top{
   background-color: #7f234f;
@@ -54,9 +53,9 @@ img.card-img-top{
 }
 
 .grow:hover {
-  -webkit-transform: scale(1.05);
-  -ms-transform: scale(1.05);
-  transform: scale(1.05);
+  -webkit-transform: scale(1.01);
+  -ms-transform: scale(1.01);
+  transform: scale(1.01);
 }
 
 

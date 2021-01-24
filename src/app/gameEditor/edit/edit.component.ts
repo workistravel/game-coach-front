@@ -13,6 +13,7 @@ import {CustomHttpResponse} from '../../model/custom-http-response';
 import {environment} from '../../../environments/environment';
 import {Card} from '../../model/card';
 
+
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -198,8 +199,6 @@ export class EditComponent implements OnInit ,OnDestroy {
   }
 
 
-
-
 // для удаления фото из стораджа
   private removePicture(urlPicture: string): void {
       const formData = new FormData();
@@ -265,10 +264,13 @@ export class EditComponent implements OnInit ,OnDestroy {
     );
   }
 
-  closeEdit() {
-    this.outputDeck= this.currentDeck;
-    this.outputCards = this.currentDeck.cards;
+  closeEdit(deck: Deck) {
+    this.currentDeck=deck;
+    this.outputDeck = deck;
+    this.outputCards = deck.cards;
     EditComponent.clickButton('closeEdit');
+    EditComponent.clickButton('openDeck');
+
   }
 
   goToMenu() {

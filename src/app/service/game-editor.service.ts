@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Card} from '../model/card';
 import {Game } from '../model/game';
 import {CustomHttpResponse} from '../model/custom-http-response';
-import {Deck} from '../model/deck';
 import {Step} from '../model/step';
 import {Judgment} from '../model/judgment';
+import {StepForGame} from '../model/stepForGame';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +25,9 @@ export class GameEditorService {
 
   public getGames(email: string): Observable<Game[]>{
     return this.http.get<Game[]>(`${this.host}/game-editor/getGames/${email}` );
+  }
+  public getStepGame(stepId: string): Observable<StepForGame>{
+    return this.http.get<StepForGame>(`${this.host}/game-editor/get-step/${stepId}`)
   }
 
   getJudgments(stepId: string) : Observable<Judgment[]>{
@@ -47,9 +49,15 @@ export class GameEditorService {
     return this.http.post<Step>(`${this.host}/game-editor/add-deck-to-step`, formData);
   }
 
-
   public addGamesToLocalCache(response: Game[]): void{
     localStorage.setItem('games', JSON.stringify(response));
+  }
+
+  public getGamesFromLocaleCache(): Game[]{
+    if(localStorage.getItem('games')){
+      return  JSON.parse(localStorage.getItem('games'));
+    }
+    return null;
   }
 
 

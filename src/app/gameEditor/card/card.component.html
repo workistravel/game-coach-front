@@ -1,10 +1,8 @@
 
       <ul class="nav nav-pills mr-auto my-1 mb-2">
-        <li class="nav-item"><a class="btn btn-outline-dark ml-2 " (click)="goToMenu()" >  Меню </a></li>
-        <li><a class="btn btn-outline-dark ml-2" type="button" (click)="loadInfoForWork()" >
-          <i *ngIf="refreshing" class="fas fa-sync fa-spin"></i><i *ngIf="!refreshing"class="fas fa-sync"></i>
-        </a></li>
-
+        <li class="nav-item"><a class="btn btn-outline-dark ml-2 " (click)="goToMenu()">  Меню </a></li>
+        <li><a class="btn btn-outline-dark ml-2" type="button" (click)="loadInfoForWork()">
+          <i *ngIf="refreshing" class="fas fa-sync fa-spin"></i><i *ngIf="!refreshing"class="fas fa-sync"></i></a></li>
         <li class="nav-item"><a class="btn btn-outline-dark ml-2 " data-toggle="modal"  data-target="#addCard" >  Добавить новую карту  </a></li>
       </ul>
 
@@ -19,7 +17,6 @@
       <img *ngIf="!card.horizon" alt="" class="card-img-top p-3" style="max-width: 160px; "  src="{{card.pictureUrl}}">
       <img  *ngIf="card.horizon" alt="" class="card-img-top p-3" style="max-height: 150px;" src="{{card.pictureUrl}}">
     </div>
-
   </div>
 
 </div>
@@ -30,8 +27,8 @@
 
 
 <!--модальное окно карты-->
-      <div class="modal draggable fade bd-examole-modal-lg" data-keyboard="false" data-backdrop="static" id="viewCard" tabindex="-1" role="dialog"
-           aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal draggable fade bd-examole-modal-lg" data-keyboard="false" data-backdrop="static" id="viewCard" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">

@@ -11,6 +11,8 @@ import {SubSink} from 'subsink';
 import {CustomHttpResponse} from '../model/custom-http-response';
 import {HttpErrorResponse, HttpEvent, HttpEventType, HttpResponse} from '@angular/common/http';
 import {FileUploadStatus} from '../model/file-upload.status';
+import {Game} from '../model/game';
+import {GameEditorService} from '../service/game-editor.service';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +20,7 @@ import {FileUploadStatus} from '../model/file-upload.status';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  public startGame = new Game();
   public users: User[];
   public currentUser: User;
   public presence: boolean;
@@ -32,7 +35,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private router: Router,
               private authenticationService: AuthenticationService ,
               private notificationService: NotificationService,
-              private userService: UserService ,) { }
+              private userService: UserService ,
+             ) { }
 
   ngOnInit(): void {
   this.passwordForm = new FormGroup({
@@ -190,4 +194,5 @@ export class HomeComponent implements OnInit, OnDestroy {
   public profileImageImage(): void{
     this.clickButton('profile-image-input');
   }
+
 }

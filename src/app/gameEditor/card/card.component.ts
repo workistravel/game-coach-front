@@ -29,6 +29,7 @@ export class CardComponent implements OnInit, OnDestroy {
   public cardImage: File;
   public currentUrlCard: string;
   private subs = new SubSink();
+  private used: boolean;
 
   public fileName: '';
 
@@ -176,7 +177,7 @@ export class CardComponent implements OnInit, OnDestroy {
   }
 
   goToMenu() {
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('/main');
   }
 
   openCard(card: Card) {

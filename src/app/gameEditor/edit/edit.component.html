@@ -9,9 +9,10 @@
     </button>
     <div class="collapse navbar-collapse " id="navbarContent">
       <ul class="nav nav-pills mr-auto my-1 mb-2">
-        <li class="nav-item"><a class="nav-link  ml-3" [routerLink]="['/home']" ><i class="fas fa-chevron-circle-left"></i> Назад</a></li>
-        <li class="nav-item"><a class="nav-link  ml-3  active" data-toggle="tab"  href="#decks"><i class="fa fa-cogs"></i> Колоды</a></li>
-        <li class="nav-item"><a class="nav-link  ml-3 " data-toggle="tab"  href="#playingDesk" (click)="goToEditPlayingDesk()"><i class="fa fa-cogs"></i> Поле</a></li>
+        <li><a [hidden]="true" type="button" id="openDeck" data-toggle="tab" data-target="#card"  ></a></li>
+        <li class="nav-item"><a class="nav-link  ml-3" role="tab" [routerLink]="['/main']" ><i class="fas fa-chevron-circle-left"></i> Главная</a></li>
+        <li class="nav-item"><a class="nav-link  ml-3 " data-toggle="tab" data-target="#decks"><i class="fa fa-cogs"></i> Колоды</a></li>
+        <li class="nav-item"><a class="nav-link  ml-3 active " role="tab" data-toggle="tab"   href="#playingDesk" (click)="goToEditPlayingDesk()"><i class="fa fa-cogs"></i> Создать игру</a></li>
       </ul>
       <div *ngIf="presence" class="md-2" style="color:#fff7e3; " >
         Привет, {{ currentUser?.firstName}}
@@ -23,41 +24,46 @@
 
 
 
+
 <!--общий контейне-->
     <div class="container-lg">
       <div class="tab-content mt-3" >
 
+
+
         <!---------------------------колоды------------------------>
-        <div class="container tab-pane fade active show" id="decks" >
-          <div class="card shadow p-3 mb-5 bg-white rounded">
-              <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                    <div class="navbar-nav">
-                      <ul class="nav nav-pills mr-auto my-1 mb-2">
-                        <li class="nav-item"><a class="btn btn-outline-dark ml-3 " (click)="goToMenu()" >  Меню </a></li>
-                        <li class="nav-item"><a class="btn btn-outline-dark ml-3 " data-toggle="modal"  data-target="#addDeck">  Добавить новую колоду  </a></li>
-                      </ul>
+        <div class="tab-pane fade "   id="decks">
+          <div class="container">
+            <div class="card shadow p-3 mb-5 bg-white rounded">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                  <div class="container-fluid">
+                      <div class="navbar-nav">
+                        <ul class="nav nav-pills mr-auto my-1 mb-2">
+                          <li class="nav-item"><a class="btn btn-outline-dark ml-3 " (click)="goToMenu()" >  Меню </a></li>
+                          <li class="nav-item"><a class="btn btn-outline-dark ml-3 " data-toggle="modal"  data-target="#addDeck">  Добавить новую колоду  </a></li>
+                        </ul>
+                      </div>
+                    </div>
+                </nav>
+                <hr>
+                 <!-- колоды-->
+                  <div class="row bootstrap snippets">
+                    <div class="card shadow mx-auto mb-3 grow" style="width:320px;"  *ngFor=" let deck of decks">
+                      <img alt="" class="card-img-top p-3 shadow" (click)="closeEdit(deck)" src="{{deck?.backOfCardUrl}}">
+                      <div class="card-body">
+                        <h4 class="card-title text-center">{{deck.name}}</h4>
+                          <a href="#editDeck" type="button" (click)="onUploadCurrentDeck(deck)"  data-toggle="modal" class="btn btn-outline-dark ml-3 ">Редактор</a>
+                          <a class="btn btn-outline-dark ml-3" (click)="deleteDeck(deck.id)">Удалить</a>
+                      </div>
                     </div>
                   </div>
-              </nav>
-              <hr>
-               <!-- колоды-->
-                <div class="row bootstrap snippets">
-                  <div class="card shadow mx-auto mb-3 grow" style="width:320px;"  *ngFor=" let deck of decks">
-                    <img alt="" class="card-img-top p-3 shadow" src="{{deck?.backOfCardUrl}}">
-                    <div class="card-body">
-                      <h4 class="card-title text-center">{{deck.name}}</h4>
-                        <a href="#editDeck" (click)="onUploadCurrentDeck(deck)"  data-toggle="modal" class="btn btn-outline-dark ml-3 ">Редактор</a>
-                        <button class="btn btn-outline-dark ml-3" (click)="deleteDeck(deck.id)">Удалить</button>
-                    </div>
-                  </div>
-                </div>
-            </div>
+              </div>
+          </div>
         </div>
 
 
-        <!--редактор карт-->
-        <div class="container  tab-pane fade " id="card" >
+        <!----------------------------колоды------------->
+        <div class="container  tab-pane tab-content fade " id="card" >
           <div class="container row">
             <div class="container col-3">
               <div class="card shadow p-3 bg-white rounded">
@@ -69,6 +75,7 @@
             </div>
             <div class="container col-9" >
               <div class="card shadow p-4 mb-5 bg-white rounded">
+
                 <h3>Карты в колоде</h3>
                 <hr>
                 <app-card [inputDeck]="outputDeck" [inputCards]="outputCards" ></app-card>
@@ -78,7 +85,9 @@
         </div>
 <!---------------------------------------колоды конец------------------------------->
 
-        <div class="container tab-pane fade  " id="playingDesk" >
+
+
+        <div class="container tab-pane fade in active show "  id="playingDesk" >
           <app-playing-desk [inputCurrentUser]="outputUser"></app-playing-desk>
         </div>
 
@@ -132,7 +141,6 @@
               </form>
          </div>
          <div class="modal-footer">
-           <a class="btn btn-outline-dark" data-toggle="tab"  href="#card" (click)="closeEdit()"> Добавить карты?</a>
            <button type="button" class="btn btn-outline-dark" aria-hidden="true" id="closeEdit" (click)="cleanEditForm()" data-dismiss="modal">Закрыть</button>
       </div>
     </div>

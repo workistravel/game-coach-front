@@ -34,7 +34,6 @@ public refreshing: boolean;
   public step = new Step();
   public judgment = new Judgment();
   public judgments: Judgment[] = [];
-  // public words: string[]= [];
   public nameDeck: string;
   public nameOfDecks: string[]= [];
   public defaultUrlDeck: string;
@@ -52,11 +51,9 @@ public refreshing: boolean;
   }
 
   ngOnInit(): void {
-  this.defaultUrlDeck =  environment.defaultPhotoFront;
-  this.currentUser = this.authenticationService.getUserFromLocalCache();
+    this.defaultUrlDeck =  environment.defaultPhotoFront;
+    this.currentUser = this.authenticationService.getUserFromLocalCache();
     this.addGamesFromDB();
-
-
   }
 
   onSaveStep(form: NgForm) {
@@ -91,9 +88,7 @@ public refreshing: boolean;
     this.currentDecks = this.cardService.getDecksFromLocaleCache();
     this.getNamesDecks();
     this.currentGame = game;
-     // currentDeck.find(x => x.id == this.step.deckId);
-    // this.words = game.name.split('');
-    // this.words.unshift('Resource');
+    this.clickButton('on');
   }
 
   // добавляем суждения в базу
@@ -133,6 +128,7 @@ public refreshing: boolean;
         (response: Game) => {
           this.currentGames.unshift(response);
           this.refreshing= false;
+          this.addGamesFromDB();
         },
         (errorResponse: HttpErrorResponse) => {
           this.sendNotification(NotificationType.ERROR, errorResponse.error.message);
@@ -148,6 +144,7 @@ public refreshing: boolean;
     this.subs.add(
       this.gameEditorService.getGames(this.currentUser.email).subscribe(
         (response: Game[]) => {
+          // this.gameEditorService.addGamesToLocalCache(response);
           this.currentGames = response;
           this.sendNotification(NotificationType.SUCCESS,`${response.length}  игры загружено для пользователя ${this.currentUser.firstName}` );
         },
@@ -160,18 +157,27 @@ public refreshing: boolean;
 
 
   // удаление игры
+
   public deleteGame(gameId: string): void {
+    this.clickButton('close-delete-game');
     this.subs.add(
       this.gameEditorService.deleteGame(this.currentUser.email, gameId).subscribe(
         (response: CustomHttpResponse) =>  {
           this.sendNotification(NotificationType.SUCCESS,   response.message.toLowerCase() );
           this.addGamesFromDB();
+          // this.currentGames = this.gameEditorService.getGamesFromLocaleCache();
           this.currentGame= new Game();
+          this.clickButton('onEmpty');
         },
         (errorResponse: HttpErrorResponse) => {
           this.sendNotification(NotificationType.ERROR, errorResponse.error.message)
         }
       ));
+  }
+
+  // вкл модального окна удаления игры
+  onDeleteGame() {
+    this.clickButton('deleteGameModal');
   }
 
 
@@ -203,7 +209,7 @@ public refreshing: boolean;
     this.nameOfDecks = [];
     this.currentDecks.forEach(x=> {
      this.nameOfDecks.push(x.name) ;
-    } );
+    });
   }
 
 
@@ -277,4 +283,6 @@ public refreshing: boolean;
   private clickButton(buttonId: string): void{
     document.getElementById(buttonId).click();
   }
+
+
 }

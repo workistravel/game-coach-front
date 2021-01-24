@@ -9,10 +9,11 @@ import {ManagementComponent} from './management/management.component';
 import {EditComponent} from './gameEditor/edit/edit.component';
 import {CardComponent} from './gameEditor/card/card.component';
 import {PlayingDeskComponent} from './gameEditor/playing-desk/playing-desk.component';
+import {GameComponent} from './game/game.component';
 
 const routes: Routes = [
+  {path: 'game', component: GameComponent, canActivate: [AuthenticationGuard]},
   {path: 'home', component: HomeComponent, canActivate: [AuthenticationGuard]},
-  // {path: 'user/management', component: UserComponent, canActivate: [AuthenticationGuard]},
   {path: 'edit', component: EditComponent, canActivate: [AuthenticationGuard] ,
     children: [
       { path: 'card', component: CardComponent , canActivate: [AuthenticationGuard]},

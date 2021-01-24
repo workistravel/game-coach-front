@@ -1,5 +1,4 @@
 
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #7f234f" >
   <div class="container">
@@ -11,10 +10,10 @@
     <div class="collapse navbar-collapse " id="navbarContent">
       <ul class="nav nav-pills mr-auto my-1 mb-2">
         <li class="nav-item"><a class="nav-link  ml-3" [routerLink]="['/main']" ><i class="fas fa-chevron-circle-left"></i> Главная</a></li>
-        <li class="nav-item"><a class="nav-link  ml-3 active" data-toggle="tab"  href="#profile"><i class="fa  fa-user"></i> Профиль</a></li>
-        <li class="nav-item"><a class="nav-link  ml-3 " data-toggle="tab"  href="#change-password"><i class="fa fa-cogs"></i> Пароль</a></li>
-
-        <li class="nav-item"><a class="nav-link  ml-3" *ngIf="isAdmin || isHr"  [routerLink]="['/edit']"><i class="fa fa-gamepad" aria-hidden="true"></i> Редактор игр</a></li>
+        <li class="nav-item"><a class="nav-link  ml-3 active" data-toggle="tab" role="tabpanel"  href="#profile"><i class="fa  fa-user"></i> Профиль</a></li>
+        <li class="nav-item"><a class="nav-link  ml-3 " data-toggle="tab" role="tabpanel"  href="#change-password"><i class="fa fa-cogs"></i> Пароль</a></li>
+        <li class="nav-item"><a class="nav-link  ml-3" data-toggle="tab" [routerLink]="['/game']"><i class="fa fa-gamepad" ></i> Выбрать игру</a></li>
+        <li class="nav-item"><a class="nav-link  ml-3" *ngIf="isAdmin || isHr"  [routerLink]="['/edit']"> <i class="fa fa-cogs"></i> Редактор игр</a></li>
       </ul>
       <div *ngIf="presence" class="md-2" style="color:#fff7e3; " >
         Привет, {{ currentUser?.firstName}}
@@ -187,7 +186,7 @@
                       <div class="input-group-append">
                         <span class="input-group-text"><i class="fas fa-key"></i></span>
                       </div>
-                      <input type="password" class="form-control"  placeholder="Старый пароль" formControlName="oldPassword">
+                      <input type="password" class="form-control" id="oldPassword"  placeholder="Старый пароль" formControlName="oldPassword" autocomplete="off">
                     </div>
                     <span class="validation" style="color: red;" *ngIf="passwordForm.get('oldPassword').invalid && passwordForm.get('oldPassword').touched">
                       <small *ngIf="passwordForm.get('oldPassword').errors.required">Поле не может быть пустым</small>
@@ -197,7 +196,7 @@
                       <div class="input-group-append">
                         <span class="input-group-text"><i class="fas fa-key"></i></span>
                       </div>
-                      <input type="password" class="form-control"  placeholder="Новый пароль" formControlName="password1">
+                      <input type="password" class="form-control" id="password1"  placeholder="Новый пароль" formControlName="password1" autocomplete="off">
                     </div>
                     <span class="validation" style="color: red;" *ngIf="passwordForm.get('password1').invalid && passwordForm.get('password1').touched">
                       <small *ngIf="passwordForm.get('password1').errors.required">Поле не может быть пустым</small>
@@ -208,7 +207,7 @@
                       <div class="input-group-append">
                         <span class="input-group-text"><i class="fas fa-key"></i></span>
                       </div>
-                      <input type="password" class="form-control" id="password2"  placeholder="Повторите пароль" formControlName="password2">
+                      <input type="password" class="form-control" id="password2"  placeholder="Повторите пароль" formControlName="password2" autocomplete="off">
                     </div>
                     <span class="validation" style="color: red;" *ngIf="passwordForm.get('password2').invalid && passwordForm.get('password2').touched">
                       <small *ngIf="passwordForm.get('password2').errors.required">Поле не может быть пустым</small>

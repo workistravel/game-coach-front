@@ -22,6 +22,7 @@ import { EditComponent } from './gameEditor/edit/edit.component';
 import { CardComponent } from './gameEditor/card/card.component';
 import { CardService } from './service/card.service';
 import { PlayingDeskComponent } from './gameEditor/playing-desk/playing-desk.component';
+import { GameComponent } from './game/game.component';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -35,7 +36,8 @@ registerLocaleData(localeRu, 'ru');
     ManagementComponent,
     EditComponent,
     CardComponent,
-    PlayingDeskComponent
+    PlayingDeskComponent,
+    GameComponent
   ],
     imports: [
         FormsModule,

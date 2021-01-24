@@ -2,25 +2,31 @@
 
 <body>
   <div class="card shadow p-3 mb-5 bg-white rounded">
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <div class="navbar-nav">
-          <ul class="nav nav-pills mr-auto my-1 mb-2">
+          <ul class="nav nav-pills mr-auto my-1 mb-2" id="MyTab" role="tablist">
+            <li><a [hidden]="true" type="button" id="onEmpty" data-toggle="tab" data-target="#empty"  ></a></li>
+            <li><a [hidden]="true" type="button" id="on" data-toggle="tab"  ></a></li>
             <li class="nav-item"><a class="btn btn-outline-dark ml-2" [routerLink]="['/home']" >  Меню </a></li>
-            <li><a class="btn btn-outline-dark ml-2" type="button" data-toggle="tab" *ngFor="let game of currentGames" (click)="selectGame(game)"  href="#{{game.name}}">{{game.name}}</a></li>
+            <li class="nav-item"><a class="btn btn-outline-dark ml-2"  data-toggle="tab" *ngFor="let game of this.currentGames" (click)="selectGame(game)"  href="#{{game.name}}">{{game.name}}</a></li>
             <li class="nav-item"><a class="btn btn-outline-dark ml-2" data-toggle="modal"  data-target="#addNewNameForGame"><i class="fa fa-plus" ></i>  Добавить игру </a></li>
           </ul>
         </div>
       </div>
     </nav>
     <hr>
-
+<!--    <script>-->
+<!--      $('#myTab a:first').tab('show');-->
+<!--    </script>-->
 
     <button [hidden]="true" type="button" id="openAddJudgment" data-toggle="modal" data-target="#addJudgment">
     </button>
 
     <button [hidden]="true" type="button" id="openEditJudgment" data-toggle="modal" data-target="#editJudgment">
+    </button>
+
+    <button [hidden]="true" type="button" id="deleteGameModal" data-toggle="modal" data-target="#deleteGame">
     </button>
 
 
@@ -29,10 +35,17 @@
     <div class="container">
       <div class="tab-content mt-3" >
 <!--------------------------------------->
+        <div  class="container tab-pane fade" id="empty" >
+
+        </div>
+
 
            <!--------------редактор суждений-->
         <div  class="container tab-pane fade" id="judgments" >
           <div class="row">
+<!--            <ul class="nav nav-pills mr-auto my-1 mb-2">-->
+<!--             <li> <a class="btn btn-outline-dark ml-2" role="tabpanel" data-toggle="tab"  href="#{{this.currentGame.name}}"> назад</a></li>-->
+<!--            </ul>-->
             <div class="p-1  mx-auto col-2" >
               <img class="card-img-top img-fluid   shadow" style="max-width: 100px; max-height: 150px" src="{{this.getPicture(this.step.deckId)}}" alt="">
             </div>
@@ -71,12 +84,9 @@
 
         <!----------игра--выбранная------->
         <div  class="container tab-pane fade" id="{{this?.currentGame.name}}" >
-          <button type="button" class="close" aria-label="delete"  (click)="deleteGame(currentGame.id)">
-            <span aria-hidden="true" style="color: brown">delete</span>
-          </button>
           <h3 class="text-center mb-lg-4">игра {{this?.currentGame.name}}</h3>
             <div class="row">
-              <div class="card-group mx-auto mb-4 " style="width: 200px"     *ngFor=" let stepShow of this?.currentGame.steps">
+              <div class="card-group mx-auto mb-4 " style="width: 200px;"     *ngFor=" let stepShow of this?.currentGame.steps">
                 <form #formAddStep="ngForm" (ngSubmit)="onSaveStep(formAddStep)">
                 <div class="card">
                   <div class="card-header bg-transparent text-center mb-2"><h3></h3>{{stepShow.name}}
@@ -89,7 +99,7 @@
                     </div>
 
                     <div class="p-1  justify-content-center align-items-center shadow mx-auto" >
-                      <img class="card-img-top img-fluid   shadow" style="max-width: 100px; max-height: 150px" src="{{this.getPicture(stepShow.deckId)}}" alt="">
+                      <img class="card-img-top img-fluid   shadow" style="width: 100px; height: 150px" src="{{this.getPicture(stepShow.deckId)}}" alt="">
                     </div>
                     <div class="card-body">
 
@@ -111,8 +121,7 @@
               </div>
             </div>
             <hr>
-            <button  type="button"  class="btn btn-outline-dark btn-sm float-right">сохранить игру</button>
-
+          <button type="button" class="btn btn-outline-dark" aria-label="delete"  (click)="onDeleteGame()">удалить игру</button>
         </div>
 
 
@@ -204,4 +213,25 @@
   </div>
   <!---------------------------------------->
 
+  <!------удалене игры модальное окно-------->
+  <div class="modal draggable fade bd-examole-modal-lg"  data-keyboard="false" data-backdrop="static" id="deleteGame" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Удаление игры {{this.currentGame.name}}</h5>
+          </div>
+
+            <div class="modal-body">
+              <label>Вы уверены, что хотите удалить игру?</label>
+              <button type="submit"  class="btn btn-outline-dark col-lg" (click)="deleteGame(this.currentGame.id)">Удалить</button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-dark" aria-hidden="true" id="close-delete-game" data-dismiss="modal"  >Close</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!---------------------------------------->
 </body>
