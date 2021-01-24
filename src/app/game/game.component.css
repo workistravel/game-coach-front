@@ -1,0 +1,24 @@
+.navbar-brand{
+  font-family:'Roboto';
+}
+.card{
+  background-color: #fff7e3;
+}
+.btn.btn-outline-dark{
+  color: #fff7e3;
+  border-color: #fff7e3;
+  background-color: #7f234f !important;
+}
+.btn.btn-outline-dark:hover{
+  color: black;
+}
+.close.change{
+  outline: none;
+  color: #7f234f;
+  margin-left: 140px;
+  margin-bottom: auto;
+}
+.close.change:hover{
+  color: red;
+}
+

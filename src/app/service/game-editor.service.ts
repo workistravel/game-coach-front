@@ -29,6 +29,9 @@ export class GameEditorService {
   public getStepGame(stepId: string): Observable<StepForGame>{
     return this.http.get<StepForGame>(`${this.host}/game-editor/get-step/${stepId}`)
   }
+  public resetMemoryUsedCard(email: string): Observable<CustomHttpResponse>{
+    return this.http.get<CustomHttpResponse>(`${this.host}/game-editor/reset-used/${email}`)
+  }
 
   getJudgments(stepId: string) : Observable<Judgment[]>{
     return this.http.get<Judgment[]>(`${this.host}/game-editor/get-judgments/${stepId}` );

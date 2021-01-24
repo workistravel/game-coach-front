@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Deck} from '../../model/deck';
 import {User} from '../../model/user';
 import {environment} from '../../../environments/environment';
@@ -21,7 +21,7 @@ import {Judgment} from '../../model/judgment';
   templateUrl: './playing-desk.component.html',
   styleUrls: ['./playing-desk.component.css']
 })
-export class PlayingDeskComponent implements OnInit {
+export class PlayingDeskComponent implements OnInit , OnDestroy{
   @Input() inputCurrentUser: User;
   @ViewChild('nameClean') nameClean: ElementRef;
   @ViewChild('formStep') formStep: ElementRef;
@@ -49,6 +49,10 @@ public refreshing: boolean;
               private notificationService: NotificationService) {
 
   }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+    }
 
   ngOnInit(): void {
     this.defaultUrlDeck =  environment.defaultPhotoFront;
@@ -144,7 +148,6 @@ public refreshing: boolean;
     this.subs.add(
       this.gameEditorService.getGames(this.currentUser.email).subscribe(
         (response: Game[]) => {
-          // this.gameEditorService.addGamesToLocalCache(response);
           this.currentGames = response;
           this.sendNotification(NotificationType.SUCCESS,`${response.length}  игры загружено для пользователя ${this.currentUser.firstName}` );
         },
@@ -179,19 +182,6 @@ public refreshing: boolean;
   onDeleteGame() {
     this.clickButton('deleteGameModal');
   }
-
-
-
-
-  private sendNotification(notificationType: NotificationType, message: string): void {
-    if(message){
-      this.notificationService.notify(notificationType, message);
-    }else {
-      this.notificationService.notify(notificationType, 'An error occurred. Please try again. ');
-    }
-  }
-
-
 
   getPicture(deckId: string): string {
     if(this.currentDecks!==undefined){
@@ -284,5 +274,13 @@ public refreshing: boolean;
     document.getElementById(buttonId).click();
   }
 
+
+  private sendNotification(notificationType: NotificationType, message: string): void {
+    if(message){
+      this.notificationService.notify(notificationType, message);
+    }else {
+      this.notificationService.notify(notificationType, 'An error occurred. Please try again. ');
+    }
+  }
 
 }

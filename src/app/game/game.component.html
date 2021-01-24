@@ -1,0 +1,104 @@
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #7f234f" >
+  <div class="container" >
+    <a [routerLink]="['/main']" class="navbar-brand" >Game 4 coach</a>
+    <button class="navbar-toggler" type="button"  style="background-color:  #fff7e3;"  data-toggle="collapse" data-target="#navbarContent"
+            aria-controls="navbarContent" aria-expanded="false">
+      <span class="navbar-toggler-icon" ></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="nav nav-pills mr-auto my-1 mb-2">
+        <li class="nav-item"><a class="btn btn-outline-dark ml-2 " [routerLink]="'/home'">  Меню </a></li>
+        <li class="nav-item"><a type="button" class="btn btn-outline-dark ml-2 " aria-label="delete" (click)="cleanUsersSteps()" >Сброс</a></li>
+        <li class="nav-item"><a class="btn btn-outline-dark ml-2" type="button" data-toggle="tab" *ngFor="let game of this.currentGames"  (click)="selectGame(game)" href="#{{game.name}}">{{game.name}}</a></li>
+      </ul>
+      <div class="d-flex">
+        <button *ngIf="presence" class="btn btn-outline-dark ml-3" (click)="onLogOut()">Выход<i class="fas fa-sign-in-alt ml-1"></i></button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!--общий контейне-->
+<div class="container-lg">
+  <div class="tab-content mt-3" >
+
+
+    <div  class="container shadow tab-pane fade" id="{{this?.currentGame.name}}" >
+      <div class="container">
+        <h2 class="text-center mb-lg-4" style="font-family: 'Caveat', cursive;">игра {{this?.currentGame.name}}</h2>
+          <div class="row">
+           <div class="card-group mx-auto"  *ngFor="let step of this.stepsForGame ">
+             <div class="card shadow ">
+               <button type="button" class="close change" (click)="getStepForGame(step.id)" >
+                 <span aria-hidden="true">&times;</span>
+               </button>
+               <div class="card-header bg-transparent text-center mb-2" ><h4 style="font-family: 'Caveat', cursive;">{{step.title}}</h4>
+               </div>
+               <div class="d-flex justify-content-center align-items-center mx-2">
+                 <img class="rounded" (click)="openCard(step.id)" src="{{this.defaultUrlBackCard}}" style="max-height: 230px">
+               </div>
+                 <div class="card-body">
+                   <button *ngIf=" step.judgment !== null" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#openJudgment" (click)="openJud(step.id)" >Суждения</button>
+               </div>
+              </div>
+            </div>
+         </div>
+       </div>
+      <hr>
+    </div>
+
+    <button [hidden]="true" type="button" id="onCard" data-toggle="modal" data-target="#openCard">
+</button>
+
+  </div>
+</div>
+
+
+
+<!--------модальное окно карты-------->
+<div class="modal draggable fade bd-examole-modal-lg" data-keyboard="false" data-backdrop="static" id="openCard" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Карта</h5>
+          </div>
+          <div class="modal-body">
+           <div class="d-flex justify-content-center align-items-center rounded">
+              <img  class="rounded" style="max-width: 480px; max-height: 500px" src="{{this?.showCardUrl}}" alt="">
+             </div>
+            </div>
+          <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" aria-hidden="true" id="closeCard" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!---------------------------------->
+
+
+
+<div class="modal draggable fade bd-examole-modal-lg" data-keyboard="false" data-backdrop="static" id="openJudgment" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Суждение</h5>
+          </div>
+            <div class="modal-body">
+              <div class="d-flex justify-content-center align-items-center rounded">
+               <h2 style="font-family: 'Caveat', cursive;">{{this.showJud}}</h2>
+              </div>
+            </div>
+          <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" aria-hidden="true" id="closeJud"  data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</body>
