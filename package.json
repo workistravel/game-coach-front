@@ -4,10 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "ng build --prod"
   },
   "private": true,
   "dependencies": {
@@ -21,7 +22,9 @@
     "@angular/router": "~10.1.0",
     "@auth0/angular-jwt": "^4.2.0",
     "@ng-bootstrap/ng-bootstrap": "^8.0.0",
-    "bootstrap": "^4.5.3",
+    "bootstrap": "^4.6.0",
+    "compression": "^1.7.4",
+    "express": "^4.17.1",
     "notifyjs": "^3.0.0",
     "rxjs": "~6.6.0",
     "subsink": "^1.0.2",
