@@ -117,7 +117,6 @@ export class EditComponent implements OnInit ,OnDestroy {
         (response: Deck[]) =>{
           this.cardService.addDecksToLocalCache(response);
           this.decks = response;
-          this.sendNotification(NotificationType.SUCCESS,`${response.length}  колод(ы) загружено для пользователя ${this.currentUser.firstName}` );
         },
         (errorResponse: HttpErrorResponse) => {
           this.sendNotification(NotificationType.ERROR, errorResponse.error.message)
