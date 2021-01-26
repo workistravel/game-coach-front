@@ -7,19 +7,21 @@
             aria-controls="navbarContent" aria-expanded="false">
       <span class="navbar-toggler-icon" ></span>
     </button>
-    <div class="collapse navbar-collapse " id="navbarContent">
-      <ul class="nav nav-pills mr-auto my-1 mb-2">
-        <li class="nav-item"><a class="nav-link  ml-3" [routerLink]="['/main']" ><i class="fas fa-chevron-circle-left"></i> Главная</a></li>
-        <li class="nav-item"><a class="nav-link  ml-3 active" data-toggle="tab" role="tabpanel"  href="#profile"><i class="fa  fa-user"></i> Профиль</a></li>
-        <li class="nav-item"><a class="nav-link  ml-3 " data-toggle="tab" role="tabpanel"  href="#change-password"><i class="fa fa-cogs"></i> Пароль</a></li>
-        <li class="nav-item"><a class="nav-link  ml-3" data-toggle="tab" [routerLink]="['/game']"><i class="fa fa-gamepad" ></i> Выбрать игру</a></li>
-        <li class="nav-item"><a class="nav-link  ml-3" *ngIf="isAdmin || isHr"  [routerLink]="['/edit']"> <i class="fa fa-cogs"></i> Редактор игр</a></li>
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="nav nav-pills mr-auto mb-lg-0">
+        <li class="nav-item"><a class="nav-link" [routerLink]="['/main']" ><i class="fas fa-chevron-circle-left"></i> Главная</a></li>
+        <li class="nav-item"><a class="nav-link active" data-toggle="tab" role="tabpanel"  href="#profile" ><i class="fa  fa-user"></i> Профиль</a></li>
+        <li class="nav-item"><a class="nav-link"  data-toggle="tab" role="tabpanel"  href="#change-password"><i class="fa fa-cogs"></i> Пароль</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" [routerLink]="['/game']"><i class="fa fa-gamepad" ></i> Выбрать игру</a></li>
+        <li class="nav-item"><a class="nav-link" *ngIf="isAdmin || isHr"  [routerLink]="['/edit']"> <i class="fa fa-cogs"></i> Редактор игр</a></li>
       </ul>
-      <div *ngIf="presence" class="md-2" style="color:#fff7e3; " >
-        Привет, {{ currentUser?.firstName}}
+
+      <div *ngIf="presence" class="mx-1"  style="color:#fff7e3; " >Привет, {{ currentUser?.firstName}}</div>
+      <div class="d-flex">
+        <button class="btn btn-outline-dark " (click)="onLogOut()">Выход<i class="fas fa-sign-in-alt ml-1"></i></button>
       </div>
-      <button class="btn btn-outline-dark ml-3" (click)="onLogOut()">Выход<i class="fas fa-sign-in-alt ml-1"></i></button>
     </div>
+
   </div>
 </nav>
 

@@ -194,5 +194,4 @@ export class HomeComponent implements OnInit, OnDestroy {
   public profileImageImage(): void{
     this.clickButton('profile-image-input');
   }
-
 }

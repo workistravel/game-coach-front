@@ -8,6 +8,7 @@
           <ul class="nav nav-pills mr-auto my-1 mb-2" id="MyTab" role="tablist">
             <li><a [hidden]="true" type="button" id="onEmpty" data-toggle="tab" data-target="#empty"  ></a></li>
             <li><a [hidden]="true" type="button" id="on" data-toggle="tab"  ></a></li>
+            <li><a [hidden]="true" id="onJudgments" data-toggle="tab" href="#judgments"></a></li>
             <li class="nav-item"><a class="btn btn-outline-dark ml-2" [routerLink]="['/home']" >  Меню </a></li>
             <li class="nav-item"><a class="btn btn-outline-dark ml-2"  data-toggle="tab" *ngFor="let game of this.currentGames" (click)="selectGame(game)"  href="#{{game.name}}">{{game.name}}</a></li>
             <li class="nav-item"><a class="btn btn-outline-dark ml-2" data-toggle="modal"  data-target="#addNewNameForGame"><i class="fa fa-plus" ></i>  Добавить игру </a></li>
@@ -110,8 +111,13 @@
 
                   </div>
                   <div class="card-footer p-2 text-center">
-                    <a *ngIf="stepShow.name !== 'Resource' " type="button" class="btn btn-outline-dark btn-sm" data-toggle="tab" href="#judgments" (click)="goToAddJudgments(stepShow)">суждения</a>
-                    <button  type="submit" class="btn btn-outline-dark btn-sm float-right" (click)="saveStep(stepShow)" [disabled]="formAddStep.invalid ">сохранить</button>
+                    <div class="navbar-nav">
+                      <ul class="nav nav-pills mr-auto my-1 mb-2" >
+                        <li class="nav-item"><a *ngIf="stepShow.name !== 'Resource' " class="btn btn-outline-dark btn-sm" (click)="goToAddJudgments(stepShow)">суждения</a></li>
+                        <li  class="nav-item"><button  type="submit" class="btn btn-outline-dark btn-sm float-right" (click)="saveStep(stepShow)" [disabled]="formAddStep.invalid ">сохранить</button></li>
+                      </ul>
+                    </div>
+
                   </div>
                 </div>
                 </form>

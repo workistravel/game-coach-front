@@ -149,7 +149,6 @@ public refreshing: boolean;
       this.gameEditorService.getGames(this.currentUser.email).subscribe(
         (response: Game[]) => {
           this.currentGames = response;
-          this.sendNotification(NotificationType.SUCCESS,`${response.length}  игры загружено для пользователя ${this.currentUser.firstName}` );
         },
         (errorResponse: HttpErrorResponse) => {
           this.sendNotification(NotificationType.ERROR, errorResponse.error.message)
@@ -168,7 +167,6 @@ public refreshing: boolean;
         (response: CustomHttpResponse) =>  {
           this.sendNotification(NotificationType.SUCCESS,   response.message.toLowerCase() );
           this.addGamesFromDB();
-          // this.currentGames = this.gameEditorService.getGamesFromLocaleCache();
           this.currentGame= new Game();
           this.clickButton('onEmpty');
         },
@@ -208,7 +206,6 @@ public refreshing: boolean;
       this.gameEditorService.getJudgments(stepId).subscribe(
         (response: Judgment[]) => {
           this.judgments = response;
-          this.sendNotification(NotificationType.SUCCESS,`${response.length}  суждений загружено для пользователя ${this.currentUser.firstName}` );
         },
         (errorResponse: HttpErrorResponse) => {
           this.sendNotification(NotificationType.ERROR, errorResponse.error.message);
@@ -221,7 +218,6 @@ public refreshing: boolean;
     this.subs.add(
       this.gameEditorService.deleteJudgment(id).subscribe(
         (response: CustomHttpResponse) =>  {
-          this.sendNotification(NotificationType.SUCCESS,   response.message.toLowerCase() );
           this.getJudgments(this.step.id);
         },
         (errorResponse: HttpErrorResponse) => {
@@ -264,6 +260,7 @@ public refreshing: boolean;
   goToAddJudgments(step: Step) {
     this.step = step;
     this.getJudgments(this.step.id);
+    this.clickButton('onJudgments');
   }
 
   onAddJudgment() {
@@ -283,4 +280,7 @@ public refreshing: boolean;
     }
   }
 
+  on() {
+    console.log('Hello')
+  }
 }

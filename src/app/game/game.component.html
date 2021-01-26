@@ -9,10 +9,10 @@
       <span class="navbar-toggler-icon" ></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarContent">
-      <ul class="nav nav-pills mr-auto my-1 mb-2">
+      <ul class="nav nav-pills mr-auto mb-lg-0">
         <li class="nav-item"><a class="btn btn-outline-dark ml-2 " [routerLink]="'/home'">  Меню </a></li>
-        <li class="nav-item"><a type="button" class="btn btn-outline-dark ml-2 " aria-label="delete" (click)="cleanUsersSteps()" >Сброс</a></li>
-        <li class="nav-item"><a class="btn btn-outline-dark ml-2" type="button" data-toggle="tab" *ngFor="let game of this.currentGames"  (click)="selectGame(game)" href="#{{game.name}}">{{game.name}}</a></li>
+        <li class="nav-item"><a class="btn btn-outline-dark ml-2 " aria-label="delete" (click)="cleanUsersSteps()" >Сброс</a></li>
+        <li class="nav-item"><a class="btn btn-outline-dark ml-2" type="button " data-toggle="tab" *ngFor="let game of this.currentGames"  (click)="selectGame(game)" href="#{{game.name}}">{{game.name}}</a></li>
       </ul>
       <div class="d-flex">
         <button *ngIf="presence" class="btn btn-outline-dark ml-3" (click)="onLogOut()">Выход<i class="fas fa-sign-in-alt ml-1"></i></button>

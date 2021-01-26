@@ -1,20 +1,20 @@
 .navbar-brand{
   font-family:'Roboto';
 }
-
 .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(163,163,163, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
-a.nav-link.ml-3{
+
+a.nav-link{
   cursor: pointer;
   color: #fff7e3;
   border-color: #fff7e3;
   background-color: #7f234f !important;
 }
-a.nav-link.ml-3.active{
+a.nav-link.active{
   color: black;
 }
-a.nav-link.ml-3:hover{
+a.navbar-nav:hover{
   color: black;
 }
 
