@@ -1,9 +1,9 @@
 
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <body>
-<header class="sticky-top">
+<header class="fixed-top">
   <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #7f234f" >
-    <div class="container" >
+    <div class="container-lg" >
       <a [routerLink]="['/main']" class="navbar-brand" >Game 4 coach</a>
         <button class="navbar-toggler" type="button"  style="background-color:  #fff7e3;"  data-toggle="collapse" data-target="#navContent"
                 aria-controls="navContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,21 +29,69 @@
     </div>
   </nav>
 </header>
-<app-login (onAdd)="updatePresence($event)"></app-login>
-<router-outlet></router-outlet>
+ <app-login (onAdd)="updatePresence($event)"></app-login>
+  <router-outlet></router-outlet>
 
+<!--justify-content-center-->
+<section id="hero" class="d-flex justify-content-center">
+    <div class="container">
+
+      <div class="row text-center col-lg-12  justify-content-center">
+        <div class= "col-lg-8">
+          <h1>Коучинг, как стиль жизни!</h1>
+          <hr>
+          <h2>Трансформационные игры, коучинг, сопровождение к цели.</h2>
+        </div>
+      </div>
+
+      <div class="row col-lg-1 move-right  justify-content-center">
+
+          <div class="icon-box mx-3">
+            <a href="https://www.facebook.com/profile.php?id=100011036289953" class="social-icon-lg si-dark si-facebook">
+              <i class="fa fa-facebook"></i>
+              <i class="fa fa-facebook"></i>
+            </a>
+          </div>
+
+          <div class="icon-box mx-3">
+            <a href="https://www.youtube.com/channel/UCU7i3OD8rUxmtseCTZoQKIg" class="social-icon-lg si-dark si-g-plus">
+              <i class="fa fa-youtube"></i>
+              <i class="fa fa-youtube"></i>
+            </a>
+          </div>
+
+          <div class="icon-box mx-3">
+            <a href="#" class="social-icon-lg si-dark si-instagram">
+              <i class="fa fa-instagram"></i>
+              <i class="fa fa-instagram"></i>
+            </a>
+          </div>
+
+          <div class="icon-box mx-3">
+            <a href="#" class="social-icon-lg si-dark si-skype">
+              <i class="fa fa-skype"></i>
+              <i class="fa fa-skype"></i>
+            </a>
+        </div>
+
+
+<!--        </div>-->
+
+      </div>
+    </div>
+</section>
 <div class="container-lg">
   <div class="tab-content mt-3" >
 
-    <div class="card shadow p-3 mb-5 bg-white rounded">
-      <div class="container">
-        <div class="row">
-          <div>
+<!--    <div class="card shadow p-3 mb-5 bg-white rounded">-->
+<!--      <div class="container">-->
+<!--        <div class="row">-->
+<!--          <div>-->
 
-          </div>
-        </div>
-      </div>
-    </div>
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 
   </div>
 </div>

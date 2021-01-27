@@ -28,5 +28,119 @@ a.nav-link.ml-3:hover{
 }
 
 
+body{margin-top:20px;}
+a:hover {
+  text-decoration: none;
+}
 
+
+#hero{
+  width: 100%;
+  height: 80vh;
+  background: center / contain no-repeat url("https://gifulmen.blob.core.windows.net/card/lavanda_.jpg");
+  background-size: cover;
+  position: relative;
+  padding-top: 75px;
+}
+
+#hero.container{
+  position: relative;
+  padding-top: 45px;
+}
+
+
+h1{
+  font-family: 'Libian';
+}
+/****************
+
+SOCIAL BUTTONS
+
+**********************/
+/**social icons default size**/
+.social-icon {
+  margin: 0 5px 5px 0;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  line-height: 40px !important;
+  color: #555;
+  text-shadow: none;
+  border-radius: 3px;
+  overflow: hidden;
+  display: block;
+  float: left;
+  text-align: center;
+  border: 1px solid #AAA;
+}
+.social-icon:hover {
+  border-color: transparent;
+}
+
+.social-icon:hover i:first-child {
+  margin-top: -40px;
+}
+
+/***social icons lg (big)***/
+.social-icon-lg {
+  margin: 0 5px 5px 0;
+  width: 60px;
+  height: 60px;
+  font-size: 30px;
+  line-height: 60px !important;
+  color: #555;
+  text-shadow: none;
+  border-radius: 3px;
+  overflow: hidden;
+  display: block;
+  float: left;
+  text-align: center;
+  border: 1px solid #AAA;
+}
+.social-icon-lg:hover {
+  border-color: transparent;
+}
+
+.social-icon-lg i {
+  display: block;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  line-height: 60px;
+  position: relative;
+}
+.social-icon-lg i:last-child {
+  color: #FFF !important;
+}
+
+.social-icon-lg:hover i:first-child {
+  margin-top: -60px;
+}
+
+
+.si-dark {
+  background-color: #333;
+  border: 0px !important;
+  color: #fff !important;
+}
+
+/**icons hover colored**/
+.si-colored-facebook, .si-facebook:hover {
+  background-color: #3B5998 !important;
+}
+.si-colored-instagram, .si-instagram:hover {
+  background-color: #ff0000 !important;
+}
+.si-colored-twitter, .si-twitter:hover {
+  background-color: #00ACEE !important;
+}
+
+.si-colored-google-plus, .si-g-plus:hover {
+  background-color: #ff0000 !important;
+}
+
+.si-colored-skype, .si-skype:hover {
+  background-color: #00AFF0 !important;
+}
 
