@@ -28,7 +28,6 @@ a.nav-link.ml-3:hover{
 }
 
 
-body{margin-top:20px;}
 a:hover {
   text-decoration: none;
 }
@@ -37,7 +36,7 @@ a:hover {
 #hero{
   width: 100%;
   height: 80vh;
-  background: center / contain no-repeat url("https://gifulmen.blob.core.windows.net/card/lavanda_.jpg");
+  background: center / contain no-repeat fixed url("https://gifulmen.blob.core.windows.net/card/lavanda_.jpg");
   background-size: cover;
   position: relative;
   padding-top: 75px;
@@ -47,11 +46,30 @@ a:hover {
   position: relative;
   padding-top: 45px;
 }
-
-
-h1{
-  font-family: 'Libian';
+#hero h1{
+  margin: 0;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 64px;
+  font-family: "Poppins";
 }
+
+.about ul li{
+  list-style-type: none;
+}
+
+.cta {
+  background: no-repeat url("https://gifulmen.blob.core.windows.net/card/lavanda_.jpg") center fixed;
+  padding: 120px;
+  color: white;
+}
+.footer{
+  height: 30px;
+}
+
+
+
+
 /****************
 
 SOCIAL BUTTONS
@@ -130,14 +148,15 @@ SOCIAL BUTTONS
   background-color: #3B5998 !important;
 }
 .si-colored-instagram, .si-instagram:hover {
-  background-color: #ff0000 !important;
+  background:center no-repeat  url("https://gifulmen.blob.core.windows.net/card/instagram_back.jpg");
+  /*background-color: #ff0000 !important;*/
 }
 .si-colored-twitter, .si-twitter:hover {
   background-color: #00ACEE !important;
 }
 
 .si-colored-google-plus, .si-g-plus:hover {
-  background-color: #ff0000 !important;
+  background-color: #ea402e !important;
 }
 
 .si-colored-skype, .si-skype:hover {

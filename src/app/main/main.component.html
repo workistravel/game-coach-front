@@ -1,7 +1,7 @@
 
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <body>
-<header class="fixed-top">
+<header class="fixed-top" id="start">
   <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #7f234f" >
     <div class="container-lg" >
       <a [routerLink]="['/main']" class="navbar-brand" >Game 4 coach</a>
@@ -11,9 +11,9 @@
         </button>
       <div class="collapse navbar-collapse" id="navContent">
         <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a href="" class="nav-link">Начало</a></li>
+          <li class="nav-item"><a href="#start" class="nav-link">Начало</a></li>
           <li class="nav-item"><a href="" class="nav-link">Коучинг</a></li>
-          <li class="nav-item"><a href="" class="nav-link">Обо мне</a></li>
+          <li class="nav-item"><a href="#about" class="nav-link">Обо мне</a></li>
         </ul>
 
         <div *ngIf="presence" class="mx-1" style="color:#fff7e3; " >
@@ -33,70 +33,139 @@
   <router-outlet></router-outlet>
 
 <!--justify-content-center-->
-<section id="hero" class="d-flex justify-content-center">
+<section class="d-flex justify-content-center" id="hero" >
     <div class="container">
-
-      <div class="row text-center col-lg-12  justify-content-center">
+      <div class="row text-center mx-3 col-lg-12  justify-content-center">
         <div class= "col-lg-8">
           <h1>Коучинг, как стиль жизни!</h1>
-          <hr>
-          <h2>Трансформационные игры, коучинг, сопровождение к цели.</h2>
+          <hr >
+          <h2 class="d-sm-block d-none" >Трансформационные игры, коучинг, сопровождение к цели.</h2>
         </div>
       </div>
 
-      <div class="row col-lg-1 move-right  justify-content-center">
+      <div class="row col-lg-1 move-right justify-content-center">
 
           <div class="icon-box mx-3">
-            <a href="https://www.facebook.com/profile.php?id=100011036289953" class="social-icon-lg si-dark si-facebook">
+            <a href="https://www.facebook.com/profile.php?id=100011036289953" target="_blank" class="social-icon-lg si-dark si-facebook">
               <i class="fa fa-facebook"></i>
               <i class="fa fa-facebook"></i>
             </a>
           </div>
 
           <div class="icon-box mx-3">
-            <a href="https://www.youtube.com/channel/UCU7i3OD8rUxmtseCTZoQKIg" class="social-icon-lg si-dark si-g-plus">
+            <a href="https://www.youtube.com/channel/UCU7i3OD8rUxmtseCTZoQKIg" target="_blank" class="social-icon-lg si-dark si-g-plus">
               <i class="fa fa-youtube"></i>
               <i class="fa fa-youtube"></i>
             </a>
           </div>
 
           <div class="icon-box mx-3">
-            <a href="#" class="social-icon-lg si-dark si-instagram">
+            <a href="https://instagram.com/olga_dream_coach?igshid=1rr4r71vk11y7" target="_blank" class="social-icon-lg si-dark si-instagram" >
               <i class="fa fa-instagram"></i>
               <i class="fa fa-instagram"></i>
             </a>
           </div>
 
           <div class="icon-box mx-3">
-            <a href="#" class="social-icon-lg si-dark si-skype">
+            <a href="https://join.skype.com/invite/lZtyDpvTR8U7" class="social-icon-lg si-dark si-skype" target="_blank">
               <i class="fa fa-skype"></i>
               <i class="fa fa-skype"></i>
             </a>
         </div>
-
-
-<!--        </div>-->
 
       </div>
     </div>
 </section>
-<div class="container-lg">
-  <div class="tab-content mt-3" >
 
-<!--    <div class="card shadow p-3 mb-5 bg-white rounded">-->
-<!--      <div class="container">-->
-<!--        <div class="row">-->
-<!--          <div>-->
+<section class="about my-5" id="about">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 order-1 order-lg-2">
+          <img class="img-fluid" src="https://gifulmen.blob.core.windows.net/card/olga.jpg">
+      </div>
+        <div class="col-lg-6 pt-5 pt-lg-0 order-lg-1 content">
+          <h3>lorem lorem lorem lorem lorem lorem</h3>
 
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
+          <p class="font-italic">
+            мой текст  мой текст мой текст мой текст мой текст мой текст мой текст мой текстмой текст мой текст мой текст мой текст мой текст
+          </p>
+          <ul>
+            <li ><i class="fas fa-check" style="color: #7f234f"></i> Мой текст</li>
+            <li><i class="fas fa-check"style="color: #7f234f"></i> Мой текст</li>
+            <li><i class="fas fa-check"style="color: #7f234f"></i> Мой текст</li>
+            <li><i class="fas fa-check"style="color: #7f234f"></i> Мой текст</li>
+          </ul>
+          <p> lorem loremlorem lorem lorem loremloremloremlore mlore mloremlo remlor emloreml oremlore mloremlore mloremloremlor emlorem loreml oremlor emloremlo remlorem
+          </p>
+        </div>
+    </div>
+  </div>
+
+</section>
+
+<section class="cta">
+  <div class="container">
+    <h3>Любой текст</h3>
+  </div>
+</section>
+
+
+  <div class="carousel slide mt-3 mb-3" data-ride="carousel" id="myCarousel">
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <div class="container carousel-inner">
+      <div class="carousel-item active">
+        <div class="row justify-content-center ">
+          <div class="col-md-3 ">
+            <a href="https://gifulmen.blob.core.windows.net/card/sert1.jpg" target="_blank">
+              <img  class="w-100" src="https://gifulmen.blob.core.windows.net/card/sert1.jpg" alt="First slide">
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <div class="row justify-content-center">
+          <div class="col-md-3  ">
+            <a href="https://gifulmen.blob.core.windows.net/card/sert2.jpg" target="_blank">
+              <img  class="w-100" src="https://gifulmen.blob.core.windows.net/card/sert2.jpg" alt="Second slide">
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <div class="row justify-content-center">
+          <div class="col-md-3  ">
+            <a href="https://gifulmen.blob.core.windows.net/card/sert3.jpg" target="_blank">
+              <img  class="w-100 p-1" src="https://gifulmen.blob.core.windows.net/card/sert3.jpg" alt="Third slide">
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
 
   </div>
-</div>
-</body>
 
+</body>
+<footer class="footer ">
+  <div class="container text-center" >
+    <a target="_blank" style="color: black" href="http://linkedin.com/in/serhii-dernovyi-80a1a319b">© 2021 Dernovyi Serhii</a>
+  </div>
+</footer>
 
 
 
