@@ -36,7 +36,7 @@ a:hover {
 #hero{
   width: 100%;
   height: 80vh;
-  background: center / contain no-repeat fixed url("https://gifulmen.blob.core.windows.net/card/lavanda_.jpg");
+  background: center  no-repeat fixed url("https://gifulmen.blob.core.windows.net/card/lavanda_.jpg");
   background-size: cover;
   position: relative;
   padding-top: 75px;
@@ -59,7 +59,7 @@ a:hover {
 }
 
 .cta {
-  background: no-repeat url("https://gifulmen.blob.core.windows.net/card/lavanda_.jpg") center fixed;
+  background: center fixed no-repeat url("https://gifulmen.blob.core.windows.net/card/lavanda_.jpg") ;
   padding: 120px;
   color: white;
 }
