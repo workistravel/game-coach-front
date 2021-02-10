@@ -8,10 +8,11 @@
             aria-controls="navbarContent" aria-expanded="false">
       <span class="navbar-toggler-icon" ></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarContent">
+    <div *ngIf="isHr" class="collapse navbar-collapse" id="navbarContent" >
       <ul class="nav nav-pills mr-auto mb-lg-0">
         <li class="nav-item"><a class="btn btn-outline-dark ml-2 " [routerLink]="'/home'">  Меню </a></li>
         <li class="nav-item"><a class="btn btn-outline-dark ml-2 " aria-label="delete" (click)="cleanUsersSteps()" >Сброс</a></li>
+        <li class="nav-item"><a class="btn btn-outline-dark ml-2 "   (click)="onServ()" data-toggle="tab" href="#activeGame" >Совместная игра</a></li>
         <li class="nav-item"><a class="btn btn-outline-dark ml-2" type="button " data-toggle="tab" *ngFor="let game of this.currentGames"  (click)="selectGame(game)" href="#{{game.name}}">{{game.name}}</a></li>
       </ul>
       <div class="d-flex">
@@ -21,16 +22,24 @@
   </div>
 </nav>
 
+
+
+
 <!--общий контейне-->
 <div class="container-lg">
   <div class="tab-content mt-3" >
 
 
+<!--<div class="container tab-pane fage" id="activeGame" >-->
+<!--  <app-game-active></app-game-active>-->
+<!--</div>-->
+
     <div  class="container shadow tab-pane fade" id="{{this?.currentGame.name}}" >
       <div class="container">
         <h2 class="text-center mb-lg-4" style="font-family: 'Caveat', cursive;">игра {{this?.currentGame.name}}</h2>
           <div class="row">
-           <div class="card-group mx-auto"  *ngFor="let step of this.stepsForGame ">
+<!--            this.stepsForGame   this.gameSteps -->
+           <div class="card-group mx-auto"  *ngFor="let step of  this.stepsForGame">
              <div class="card shadow ">
                <button type="button" class="close change" (click)="getStepForGame(step.id)" >
                  <span aria-hidden="true">&times;</span>
@@ -52,6 +61,7 @@
 
     <button [hidden]="true" type="button" id="onCard" data-toggle="modal" data-target="#openCard">
 </button>
+
 
   </div>
 </div>

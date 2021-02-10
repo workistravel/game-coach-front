@@ -42,6 +42,8 @@ export class CardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.currentUrlCard = environment.defaultPhotoFront;
     this.currentUser = this.authenticationService.getUserFromLocalCache();
+    console.log(this.inputCards)
+    console.log(this.inputDeck)
 
   }
   ngOnDestroy(): void {
@@ -93,6 +95,7 @@ export class CardComponent implements OnInit, OnDestroy {
     this.fileName = event.target.files[0].name;
     this.cardImage = event.target.files[0];
     if(this.cardImage){
+      formData.append('currentEmail', this.currentUser.email);
       formData.append('file', event.target.files[0] );
       this.subs.add(
         this.cardService.addPictureToStorage(formData).subscribe(
@@ -124,6 +127,7 @@ export class CardComponent implements OnInit, OnDestroy {
   // удаляем ненужную карту из хранилища
   private removePicture(urlPicture: string): void {
     const formData = new FormData();
+    formData.append('currentEmail',this.currentUser.email)
     formData.append('urlPicture', urlPicture);
     this.subs.add(
       this.cardService.removePictureInStorage(formData).subscribe(

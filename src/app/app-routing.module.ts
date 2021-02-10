@@ -10,9 +10,12 @@ import {EditComponent} from './gameEditor/edit/edit.component';
 import {CardComponent} from './gameEditor/card/card.component';
 import {PlayingDeskComponent} from './gameEditor/playing-desk/playing-desk.component';
 import {GameComponent} from './game/game.component';
+import {GameActiveComponent} from './game-active/game-active.component';
 
 const routes: Routes = [
+
   {path: 'game', component: GameComponent, canActivate: [AuthenticationGuard]},
+  {path: 'game-active/:id', component: GameActiveComponent, canActivate: [AuthenticationGuard] },
   {path: 'home', component: HomeComponent, canActivate: [AuthenticationGuard]},
   {path: 'edit', component: EditComponent, canActivate: [AuthenticationGuard] ,
     children: [

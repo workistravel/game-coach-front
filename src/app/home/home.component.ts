@@ -20,7 +20,6 @@ import {GameEditorService} from '../service/game-editor.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  public startGame = new Game();
   public users: User[];
   public currentUser: User;
   public presence: boolean;
@@ -40,10 +39,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
   this.passwordForm = new FormGroup({
-    // , Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+
     oldPassword: new FormControl('',[Validators.minLength(1), Validators.required]),
-    password2: new FormControl('',[Validators.minLength(1), Validators.required]),
-    password1: new FormControl('', [Validators.minLength(1), Validators.required])});
+    password2: new FormControl('',[Validators.minLength(1), Validators.required,    Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')]),
+    password1: new FormControl('', [Validators.minLength(1), Validators.required,   Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')])});
     if (this.authenticationService.isLoggedIn()){
       this.currentUser = this.authenticationService.getUserFromLocalCache();
       this.presence=true;

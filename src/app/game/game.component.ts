@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {User} from '../model/user';
 import {Game} from '../model/game';
 import {NotificationType} from '../enum/notification-type.enum';
@@ -11,8 +11,11 @@ import {SubSink} from 'subsink';
 import {Step} from '../model/step';
 import {StepForGame} from '../model/stepForGame';
 import {environment} from '../../environments/environment';
-import {Card} from '../model/card';
 import {CustomHttpResponse} from '../model/custom-http-response';
+import {Role} from '../enum/role.enum';
+
+// import {io} from 'socket.io-client';
+import {SocketService} from '../service/socket.service';
 
 
 @Component({
@@ -20,7 +23,7 @@ import {CustomHttpResponse} from '../model/custom-http-response';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css']
 })
-export class GameComponent implements OnInit, OnDestroy {
+export class GameComponent implements OnInit, OnDestroy{
   public refreshing = false;
   public currentUser = new User();
   public presence = false;
@@ -33,10 +36,15 @@ export class GameComponent implements OnInit, OnDestroy {
   public showCardUrl: string;
   public showJud: string;
   public defaultUrlBackCard: string;
+  public outputGame: StepForGame[];
+
+  private id: string;
+  private socket: any;
+  private host = 'ws://localhost:3500';
 
   constructor(private router: Router,
                private gameEditorService: GameEditorService,
-              private authenticationService: AuthenticationService,
+               private authenticationService: AuthenticationService,
                private notificationService: NotificationService) { }
 
   ngOnInit(): void {
@@ -48,12 +56,15 @@ export class GameComponent implements OnInit, OnDestroy {
     }
     this.addGamesToStorage();
     this.defaultUrlBackCard = environment.defaultPhoto;
+    // this.socket = io(this.host, {transports: ['websocket', 'polling', 'flashsocket']});
+
   }
 
   ngOnDestroy(): void {
     this.stepsForGame = null;
     this.subs.unsubscribe();
   }
+
 
   public onLogOut(): void {
     this.authenticationService.logOut();
@@ -76,7 +87,6 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   selectGame(game: Game) {
-     // this.currentSteps= [];
      this.currentSteps = game.steps;
      if(this.currentSteps.some(step => step.deckId === null)){
        this.notificationService.notify(NotificationType.INFO, 'В игре не хватает колод(ы)');
@@ -96,6 +106,8 @@ export class GameComponent implements OnInit, OnDestroy {
        this.currentGame = game;
      }
   }
+
+
   private static sortSteps(stepsForGame: StepForGame[]): StepForGame [] {
    return  stepsForGame.sort((step,next) => step > next ? -1 : 1);
   }
@@ -154,5 +166,29 @@ export class GameComponent implements OnInit, OnDestroy {
     }else {
       this.notificationService.notify(notificationType, 'An error occurred. Please try again. ');
     }
+  }
+
+  // onServ() {
+  //   // this.socketService.addToServer('steps',  this.stepsForGame);
+  //   const id = Date.now();
+  //   this.socket.on('connect', () => {
+  //     this.id = this.socket.id;
+  //   });
+  //
+  //   this.socket.emit('steps',  this.stepsForGame , id);
+  //   this.router.navigateByUrl('game-active/' + id);
+  //   this.socket.on("disconnect", () => this.disconnected());
+  // }
+  public get isHr(): boolean{
+    return  this.gerUserRole() === Role.HR || this.gerUserRole() === Role.ADMIN || this.gerUserRole() === Role.SUPER_ADMIN ;
+  }
+  private gerUserRole(): string{
+    if(this.presence) {
+      return this.authenticationService.getUserFromLocalCache().role;
+    }
+  }
+
+  private disconnected() {
+    console.log('Disconnected');
   }
 }

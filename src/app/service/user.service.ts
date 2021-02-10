@@ -53,6 +53,11 @@ export class UserService {
     return null;
   }
 
+  public changeUserInLocalCache(user: User){
+    localStorage.removeItem('user');
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
   public createUserFromDate(loggedInEmail: string, user: User, profileImageUrl: File): FormData{
     const formData = new FormData();
     formData.append('currentEmail', loggedInEmail );
