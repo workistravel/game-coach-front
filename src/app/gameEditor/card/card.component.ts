@@ -77,6 +77,7 @@ export class CardComponent implements OnInit, OnDestroy {
       this.currentUrlCard = environment.defaultPhotoFront;
     }
 
+
   }
 
   private sendNotification(notificationType: NotificationType, message: string): void {

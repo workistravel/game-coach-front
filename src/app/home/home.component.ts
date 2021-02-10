@@ -54,6 +54,7 @@ export class HomeComponent implements OnInit, OnDestroy {
      this.passwordForm.reset()
     }
 
+
   private sendNotification(notificationType: NotificationType, message: string): void {
     if(message){
       this.notificationService.notify(notificationType, message);
