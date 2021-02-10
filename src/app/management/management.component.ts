@@ -99,8 +99,10 @@ export class ManagementComponent implements OnInit, OnDestroy {
           this.fileName = null;
           this.profileImage = null;
           this.getUsers(true);
-          // this.userService.changeUserInLocalCache(response);
-          // this.currentUser = response;
+          if(this.currentUser.email === response.email){
+            this.userService.changeUserInLocalCache(response);
+            this.currentUser = response;
+          }
           this.sendNotification(NotificationType.SUCCESS,`${response.firstName}  ${response.lastName} updated successfully` )
         },
         (errorResponse: HttpErrorResponse) => {
@@ -157,7 +159,6 @@ export class ManagementComponent implements OnInit, OnDestroy {
       this.userService.updateProfileImage(formData).subscribe(
         (event: HttpEvent<any>) =>{
           this.reportUploadProgress(event);
-
         },
         (errorResponse: HttpErrorResponse) => {
           this.sendNotification(NotificationType.ERROR, errorResponse.error.message);
@@ -181,6 +182,7 @@ export class ManagementComponent implements OnInit, OnDestroy {
           this.currentUser.profileImageUrl = `${event.body.profileImageUrl}?time=${new Date().getTime()}`;
           this.sendNotification(NotificationType.SUCCESS,`${event.body.firstName}\'s profile image update successfully` );
           this.fileStatus.status = 'done';
+
           this.userService.changeUserInLocalCache(this.currentUser);
           break;
         }else {
