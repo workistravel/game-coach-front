@@ -98,8 +98,9 @@ export class ManagementComponent implements OnInit, OnDestroy {
           this.getUsers(false);
           this.fileName = null;
           this.profileImage = null;
-          this.userService.changeUserInLocalCache(response);
-          this.currentUser = response;
+          this.getUsers(true);
+          // this.userService.changeUserInLocalCache(response);
+          // this.currentUser = response;
           this.sendNotification(NotificationType.SUCCESS,`${response.firstName}  ${response.lastName} updated successfully` )
         },
         (errorResponse: HttpErrorResponse) => {
@@ -119,6 +120,8 @@ export class ManagementComponent implements OnInit, OnDestroy {
           this.getUsers(false);
           this.fileName = null;
           this.profileImage = null;
+          this.userService.changeUserInLocalCache(response);
+          this.currentUser = response;
           this.sendNotification(NotificationType.SUCCESS,`${response.firstName}  ${response.lastName} updated successfully` );
           this.refreshing = false;
         },
