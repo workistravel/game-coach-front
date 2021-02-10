@@ -15,7 +15,6 @@ import {CustomHttpResponse} from '../model/custom-http-response';
 import {Role} from '../enum/role.enum';
 
 // import {io} from 'socket.io-client';
-import {SocketService} from '../service/socket.service';
 
 
 @Component({
